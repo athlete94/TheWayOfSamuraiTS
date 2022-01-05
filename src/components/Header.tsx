@@ -1,10 +1,8 @@
 const Header = () => {
-    return <div>
-        <a href="#s">Home</a>
-        <a href="#s">News Feed</a>
-        <a href="#s">Messages</a>
+    return <header className='header'>
+            <img className="logo" src="../logo.jpg" alt="" />
 
-    </div>
+    </header>
 }
 
 export {Header}

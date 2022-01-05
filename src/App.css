@@ -1,38 +1,70 @@
 .App {
-  text-align: center;
+
+  margin: 0 auto;
+  width: 1200px;
+  display: grid; 
+
+  grid-template-areas: 
+  "header header"
+  "navbar content";
+
+  grid-template-rows: 70px 1fr;
+  grid-template-columns: 3fr 10fr;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Header */
+
+.header{
+  grid-area: header;
+  background-color: antiquewhite;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.logo {
+  width: 60px;
+  padding: 5px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+
+/* Navbar */
+
+.navbar {
+  grid-area: navbar;
+  margin-right: 10px;
+
 }
 
-.App-link {
-  color: #61dafb;
+.navbar a {
+  text-decoration: none;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.navbar-item {
+  padding: 10px 5px;
+}
+
+
+/* Content */
+
+.content {
+  grid-area: content;
+  margin: 5px 0px 5px 5px;
+}
+
+.content-image {
+  margin-bottom: 10px;
+}
+
+
+.user-info {
+  display: grid;
+  grid-template-columns: 3fr 10fr;
+}
+
+.avatar {
+  width: 150px;
+  height: 150px;
+}
+
+.avatar img {
+  width: 150px;
+  
 }

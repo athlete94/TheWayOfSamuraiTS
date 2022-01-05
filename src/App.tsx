@@ -1,12 +1,14 @@
 import './App.css';
 import { Header } from './components/Header';
-import {Technologies} from './components/Technologies'
+import {Navbar} from './components/Navbar'
+import {Main} from './components/Main'
 
 function App() {
   return (
     <div className="App">
       <Header />
-      <Technologies />
+      <Navbar />
+      <Main />
     </div>
   );
 }
