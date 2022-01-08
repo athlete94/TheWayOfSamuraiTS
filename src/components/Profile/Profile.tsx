@@ -1,5 +1,5 @@
 
-const Main = () => {
+const Profile = () => {
     return <div className='content'>
         <div className="content-image" >
             <img src='https://static.dw.com/image/44124169_403.jpg' alt="" />
@@ -24,4 +24,4 @@ const Main = () => {
     </div>
 }
 
-export {Main}
+export {Profile}
