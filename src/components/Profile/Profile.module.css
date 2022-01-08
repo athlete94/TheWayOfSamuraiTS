@@ -1,0 +1,26 @@
+/* Content */
+
+.content {
+    grid-area: content;
+    margin: 5px 0px 5px 5px;
+  }
+  
+  .content_image {
+    margin-bottom: 10px;
+  }
+  
+  
+  .user_info {
+    display: grid;
+    grid-template-columns: 3fr 10fr;
+  }
+  
+  .avatar {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .avatar img {
+    width: 150px;
+    
+  }
