@@ -1,0 +1,16 @@
+.addPost{
+    
+}
+
+.postText {
+    width: 700px;
+}
+
+.btnAddPost {
+    position: relative;
+    width: 50px;
+    height: 30px;
+
+    left: -50px;
+    top: 30px;
+}
