@@ -3,21 +3,21 @@
     grid-area: navbar;
     margin-right: 5px;
     background-color: antiquewhite;
-    
-  }
-  
-  .navbar a {
+
+}
+
+.navbar a {
     text-decoration: none;
-  }
-  
-  .navbar_item {
-    padding: 10px 7px;
+}
 
-  }
+.navbar_item {
+    display: block;
+    padding: 10px 5px;
+}
 
-  .navbar_item:hover {
+.navbar_item:hover {
     background-color: rgb(233, 218, 199);
-  }
+}
   
   
   
