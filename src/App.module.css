@@ -12,15 +12,6 @@
   grid-template-columns: 3fr 10fr;
 }
 
-/* Header */
-
-.header{
-  grid-area: header;
-  background-color: antiquewhite;
+.app_wrapper_content {
+  grid-area: content;
 }
-
-.logo {
-  width: 60px;
-  padding: 5px;
-}
-

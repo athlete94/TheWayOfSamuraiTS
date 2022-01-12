@@ -1,10 +1,4 @@
-/* Content */
 
-.content {
-    grid-area: content;
-    margin: 5px 0px 5px 5px;
-  }
-  
   .content_image {
     margin-bottom: 10px;
   }

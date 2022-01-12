@@ -4,13 +4,13 @@ import s from './Navbar.module.css'
 const Navbar = () => {
     return <div className={s.navbar}>
             <div className={s.navbar_item}>
-                <a href='s#'>Home</a>
+                <a href='/profile'>Home</a>
             </div>
             <div className={s.navbar_item}>
-                <a href='s#'>Messages</a>
+                <a href='/dialogs'>Messages</a>
             </div>
             <div className={s.navbar_item}>
-                <a href='s#'>friends</a>
+                <a href='s#'>Friends</a>
             </div>
             <div className={s.navbar_item}>
                 <a href='s#'>News</a>

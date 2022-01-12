@@ -1,8 +1,10 @@
 import s from './Post.module.css'
 
-const Post = () => {
+
+const Post = (  ) => {
+
     return <div className={s.post}>
-        Post1
+
     </div>
     
 }

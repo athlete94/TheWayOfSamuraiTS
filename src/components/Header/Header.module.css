@@ -2,11 +2,12 @@
 .header{
     grid-area: header;
     background-color: antiquewhite;
+    margin-bottom: 5px;
 }
   
 .logo {
     width: 60px;
-    padding: 5px;
+    padding: 2px 0 0 7px;
 }
   
   
