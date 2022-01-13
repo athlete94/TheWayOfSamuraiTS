@@ -10,12 +10,19 @@
     text-decoration: none;
 }
 
-.navbar_item {
+
+.item {
+    color: darkgray;
     display: block;
     padding: 10px 5px;
 }
 
-.navbar_item:hover {
+.navLink_item {
+    display: block;
+    padding: 10px 5px;
+}
+
+.navLink_item:hover {
     background-color: rgb(233, 218, 199);
 }
   
