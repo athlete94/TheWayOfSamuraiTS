@@ -1,29 +1,63 @@
 import s from "./MyPosts.module.css"
 import Post from './Post/Post'
+import {useState, ChangeEvent, KeyboardEvent} from "react";
+import {v1} from "uuid";
+import {text} from "stream/consumers";
+
 
 type postDataType = {
-    id: number
+    id: string
     text: string
 }
+
+const postData = [
+    {id: v1(), text: "It is my post"}
+]
 
 
 const MyPosts = () => {
 
-    const postData = [
-        {id: 1, text: "Salam aleykum"},
-        {id: 2, text: "Hello, friends!"},
-        {id: 3, text: "It is my post"},
-    ]
+    const [posts, setPosts] = useState<Array<postDataType>>(postData)
+    const [textInput, setTextInput] = useState<string>('')
+
+    const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => setTextInput(e.currentTarget.value)
+    const onClickHandler = () => {
+        if(textInput === "\n") { // если нажали Enter ничего не вводя, пост не добавить
+            setTextInput('')
+        }
+        else if ( textInput === '') {
+            return
+        }
+        else {
+            let newPost = {id: v1(), text: textInput}
+            setPosts([newPost, ...posts])
+            setTextInput('')
+        }
+
+    }
+    const onKeyPressHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.charCode === 13) {
+            onClickHandler()
+        }
+    }
+
 
     return <div className={s.myPosts}>
 
         <div className={s.addPost}>
-            <textarea className={s.postText} name="text" />
-            <button className={s.btnAddPost} >Add</button>
+            <textarea className={s.postText}
+                      value={textInput}
+                      onChange={onChangeHandler}
+                      onKeyPress={onKeyPressHandler}/>
+
+            <button className={s.btnAddPost}
+                    onClick={onClickHandler}
+            >Add
+            </button>
         </div>
 
         <h4>Posts</h4>
-        {postData.map(p => <Post text={p.text} />)}
+        {posts.map(p => <Post text={p.text}/>)}
     </div>
 
 }
