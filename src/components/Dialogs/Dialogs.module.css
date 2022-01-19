@@ -10,28 +10,6 @@
     margin: 5px;
 }
 
-.dialog_item {
-    padding: 10px 0;
-    border-bottom: 1px solid #ccc;
-}
-
-.dialog_item:hover {
-    background-color: #f8f5f4;
-}
-
-.dialog_item a {
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-}
-
-.dialog_item img {
-    width: 70px;
-    border-radius: 50%;
-    margin-right: 20px;
-    margin-left: 10px;
-}
-
 
 /* Messages */
 
@@ -39,6 +17,3 @@
     margin: 5px;
 }
 
-.message {
-    padding: 15px;
-}
