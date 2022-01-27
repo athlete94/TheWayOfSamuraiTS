@@ -2,20 +2,16 @@ import s from "./MyPosts.module.css"
 import Post from './Post/Post'
 import {useState, ChangeEvent, KeyboardEvent} from "react";
 import {v1} from "uuid";
-import {text} from "stream/consumers";
+import React from "react";
+import {postDataType} from '../../../redux/state'
 
 
-type postDataType = {
-    id: string
-    text: string
+type MyPostsPropsType = {
+    postData: Array<postDataType>
 }
 
-const postData = [
-    {id: v1(), text: "It is my post"}
-]
 
-
-const MyPosts = () => {
+const MyPosts: React.FC<MyPostsPropsType> = ({postData}) => {
 
     const [posts, setPosts] = useState<Array<postDataType>>(postData)
     const [textInput, setTextInput] = useState<string>('')
