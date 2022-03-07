@@ -17,3 +17,16 @@
     margin: 5px;
 }
 
+.messages textarea {
+    margin: 25px 15px;
+    width: 94%;
+}
+
+.messages button {
+    border-radius: 10px;
+    padding: 5px;
+    background-color: #a3bcf3;
+    margin: 8px;
+    float: right;
+
+}

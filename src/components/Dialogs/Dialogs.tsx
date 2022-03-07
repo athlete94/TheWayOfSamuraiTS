@@ -1,27 +1,24 @@
-import React from "react";
+import React, {useState} from "react";
 import s from './Dialogs.module.css'
 import Dialog from "./Dialog/Dialog";
-import Message from "./Messages/Message";
-import {dialogsDataType, messageDataType} from "../../redux/state";
-
-type dialogsPropsType = {
-    messageData: Array<messageDataType>
-    dialogsData: Array<dialogsDataType>
-}
+import {Messages} from "./Messages/Messages";
+import {DialogsPropsType} from "./DialogsContainer";
 
 
-const Dialogs: React.FC <dialogsPropsType> = ({messageData, dialogsData }) => {
+const Dialogs = (props: DialogsPropsType) => {
+    const {
+        dialogs,
+        addMessage,
+        messages
+    } = props
 
     //UI
     return <div className={s.dialogs}>
-
         <div className={s.dialogs_items}>
-            {dialogsData.map(d => <Dialog key={d.id} name={d.name} id={d.id} /> )}
+            {dialogs.map(d => <Dialog key={d.id} name={d.name} id={d.id}/>)}
         </div>
-
-        <div className={s.messages}>
-            {messageData.map(m => <Message key={m.id} text={m.message} />)}
-        </div>
+        <Messages addMessage={addMessage}
+                  messages={messages}/>
     </div>
 }
 

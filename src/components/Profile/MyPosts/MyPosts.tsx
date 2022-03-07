@@ -1,40 +1,18 @@
 import s from "./MyPosts.module.css"
 import Post from './Post/Post'
-import {useState, ChangeEvent, KeyboardEvent} from "react";
-import {v1} from "uuid";
+import {useState, ChangeEvent} from "react";
 import React from "react";
-import {postDataType} from '../../../redux/state'
+import {MyPostsPropsType} from "./MyPostsContainer";
 
 
-type MyPostsPropsType = {
-    postData: Array<postDataType>
-}
 
-
-const MyPosts: React.FC<MyPostsPropsType> = ({postData}) => {
-
-    const [posts, setPosts] = useState<Array<postDataType>>(postData)
+const MyPosts = ({posts, addPost}: MyPostsPropsType) => {
     const [textInput, setTextInput] = useState<string>('')
 
-    const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => setTextInput(e.currentTarget.value)
+    const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => setTextInput(e.currentTarget.value.trimStart())
     const onClickHandler = () => {
-        if(textInput === "\n") { // если нажали Enter ничего не вводя, пост не добавить
-            setTextInput('')
-        }
-        else if ( textInput === '') {
-            return
-        }
-        else {
-            let newPost = {id: v1(), text: textInput}
-            setPosts([newPost, ...posts])
-            setTextInput('')
-        }
-
-    }
-    const onKeyPressHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-        if (e.charCode === 13) {
-            onClickHandler()
-        }
+        textInput && addPost(textInput)
+        setTextInput('')
     }
 
 
@@ -44,7 +22,7 @@ const MyPosts: React.FC<MyPostsPropsType> = ({postData}) => {
             <textarea className={s.postText}
                       value={textInput}
                       onChange={onChangeHandler}
-                      onKeyPress={onKeyPressHandler}/>
+            />
 
             <button className={s.btnAddPost}
                     onClick={onClickHandler}
