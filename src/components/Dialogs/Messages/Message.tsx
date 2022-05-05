@@ -6,11 +6,12 @@ type MessagePropsType = {
     id?: string
 }
 
-const Message: React.FC<MessagePropsType> = ({text,id}) => {
+const Message= React.memo(({text,id}: MessagePropsType) => {
 
+    console.log('msg')
     return <div className={s.message}>
         {text}
     </div>
-}
+})
 
 export default Message

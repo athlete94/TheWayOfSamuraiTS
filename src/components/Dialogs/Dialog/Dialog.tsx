@@ -7,8 +7,8 @@ type DialogPropsType = {
     id: string
 }
 
-const Dialog: React.FC<DialogPropsType> = ({name, id}) => {
-
+const Dialog = React.memo(({name, id}: DialogPropsType) => {
+    console.log('dialog')
     return <div className={s.dialog_item}>
         <NavLink to={`/dialogs/${id}`}>
             <img src="https://shapka-youtube.ru/wp-content/uploads/2021/02/avatarka-dlya-skaypa-dlya-parney.jpg" alt="ava"/>
@@ -16,5 +16,5 @@ const Dialog: React.FC<DialogPropsType> = ({name, id}) => {
         </NavLink>
     </div>
 }
-
+)
 export default Dialog

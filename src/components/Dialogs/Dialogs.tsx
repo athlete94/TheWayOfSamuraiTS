@@ -1,24 +1,23 @@
-import React, {useState} from "react";
+import React from "react";
 import s from './Dialogs.module.css'
 import Dialog from "./Dialog/Dialog";
-import {Messages} from "./Messages/Messages";
-import {DialogsPropsType} from "./DialogsContainer";
+import {AppStateType} from "../../redux/store";
+import {DialogsStateType, DialogsType} from "../../redux/dialogsReducer";
+import {useSelector} from "react-redux";
+import {MessagesContainer} from "./Messages/MessagesContainer";
 
 
-const Dialogs = (props: DialogsPropsType) => {
-    const {
-        dialogs,
-        addMessage,
-        messages
-    } = props
+const Dialogs = () => {
+    // const  = useSelector<AppStateType, Array<DialogsType>>(state => state.dialogsReducer.dialogs)
+    const {dialogs, messages, messageText} = useSelector<AppStateType, DialogsStateType>(state => state.dialogsReducer)
 
     //UI
     return <div className={s.dialogs}>
         <div className={s.dialogs_items}>
             {dialogs.map(d => <Dialog key={d.id} name={d.name} id={d.id}/>)}
         </div>
-        <Messages addMessage={addMessage}
-                  messages={messages}/>
+
+        <MessagesContainer messages={messages} messageText={messageText}/>
     </div>
 }
 

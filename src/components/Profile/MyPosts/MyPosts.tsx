@@ -1,37 +1,37 @@
 import s from "./MyPosts.module.css"
 import Post from './Post/Post'
-import {useState, ChangeEvent} from "react";
+import {ChangeEvent} from "react";
 import React from "react";
-import {MyPostsPropsType} from "./MyPostsContainer";
+import {PostsType} from "../../../redux/profileReducer";
 
+type MyPostsPropsType = {
+    posts: Array<PostsType>,
+    textInput: string,
+    addPostHandler: () => void,
+    setTextInput: (e: ChangeEvent<HTMLTextAreaElement>) => void
+}
 
+const MyPosts = ({posts, textInput, addPostHandler, setTextInput}: MyPostsPropsType) => {
 
-const MyPosts = ({posts, addPost}: MyPostsPropsType) => {
-    const [textInput, setTextInput] = useState<string>('')
-
-    const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => setTextInput(e.currentTarget.value.trimStart())
-    const onClickHandler = () => {
-        textInput && addPost(textInput)
-        setTextInput('')
-    }
-
-
+    console.log('posts')
     return <div className={s.myPosts}>
 
         <div className={s.addPost}>
             <textarea className={s.postText}
                       value={textInput}
-                      onChange={onChangeHandler}
+                      onChange={setTextInput}
             />
 
             <button className={s.btnAddPost}
-                    onClick={onClickHandler}
+                    onClick={addPostHandler}
             >Add
             </button>
         </div>
 
         <h4>Posts</h4>
-        {posts.map(p => <Post text={p.text}/>)}
+        {posts.map(p => <Post
+            key={p.id}
+            text={p.text}/>)}
     </div>
 
 }

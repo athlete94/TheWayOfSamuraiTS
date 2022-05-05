@@ -4,6 +4,10 @@
     border-bottom: 1px solid #ccc;
 }
 
+.addPost textarea {
+    outline: none;
+}
+
 .postText {
     width: 850px;
     margin-right: 10px;

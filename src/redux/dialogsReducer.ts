@@ -1,6 +1,7 @@
 import {v1} from "uuid";
 
 const ADD_MESSAGE = 'ADD_MESSAGE'
+const CHANGE_MESSAGE_TEXT = 'CHANGE_MESSAGE_TEXT'
 
 export type MessagesType = {
     id: string
@@ -11,9 +12,9 @@ export type DialogsType = {
     name: string
 }
 
-export type InitialStateType = typeof initialState
+export type DialogsStateType = typeof dialogsState
 
-const initialState= {
+const dialogsState= {
     dialogs: [
         {id: v1(), name: 'Arina'},
         {id: v1(), name: 'Andrey'},
@@ -25,10 +26,11 @@ const initialState= {
         {id: v1(), message: 'Hello, it is frontend!'},
         {id: v1(), message: 'Really?'},
         {id: v1(), message: 'Really, didnt you believe?'},
-    ]as Array<MessagesType>
+    ]as Array<MessagesType>,
+    messageText: '',
 }
 
-export const dialogsReducer = (state: InitialStateType = initialState, action: dialogsReducerActionType): InitialStateType => {
+export const dialogsReducer = (state: DialogsStateType = dialogsState, action: dialogsReducerActionType): DialogsStateType => {
     switch (action.type) {
         case ADD_MESSAGE:
             let newMessage = {id: v1(), message: action.payload.text}
@@ -36,20 +38,32 @@ export const dialogsReducer = (state: InitialStateType = initialState, action: d
                 ...state,
                 messages: [ ...state.messages, newMessage]
             }
+        case CHANGE_MESSAGE_TEXT:
+            return {...state, messageText: action.payload.text}
         default:
             return state
     }
 }
 
-type dialogsReducerActionType = addMessageACType
+export  type dialogsReducerActionType = addMessageACType | changeMessageTextActionType
 
-type addMessageACType = ReturnType<typeof addMessageAC>
-export const addMessageAC = (text: string) => {
+type addMessageACType = ReturnType<typeof addMessage>
+export const addMessage = (text: string) => {
     return {
         type: ADD_MESSAGE,
         payload: {
             text,
         }
     } as const
+}
+
+type changeMessageTextActionType = ReturnType<typeof changeMessageText>
+export const changeMessageText = (text: string) => {
+    return {
+        type: CHANGE_MESSAGE_TEXT,
+        payload: {
+            text,
+        }
+    }as const
 }
 

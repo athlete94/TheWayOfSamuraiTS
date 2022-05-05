@@ -1,0 +1,32 @@
+.user {
+    display: flex;
+    justify-content: space-between;
+}
+
+.img {
+    display: flex;
+    flex-direction: column;
+    height: 150px;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.img img{
+    width: 100px;
+    border-radius: 50%;
+}
+
+.img button {
+    width: 70px;
+    background-color: #f8f5f4;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+}
+
+.info {
+    width: 600px;
+}
+
+.status {
+    font-weight: lighter;
+}

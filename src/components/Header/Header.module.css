@@ -3,6 +3,7 @@
     grid-area: header;
     background-color: antiquewhite;
     margin-bottom: 5px;
+    width: 1200px;
 }
   
 .logo {

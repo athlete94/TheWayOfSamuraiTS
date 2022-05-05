@@ -7,12 +7,11 @@ type PostPropsType = {
     id?: string
 }
 
-const Post: React.FC<PostPropsType> = ({text}) => {
-
+const Post: React.FC<PostPropsType> = React.memo(({text}) => {
+    console.log("post")
     return <div className={s.post}>
         {text}
     </div>
     
-}
-
+})
 export default Post

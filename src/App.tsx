@@ -7,7 +7,8 @@ import s from './App.module.css'
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import News from "./components/News/News";
 import React from "react";
-import DialogsContainer from "./components/Dialogs/DialogsContainer";
+import Dialogs from "./components/Dialogs/Dialogs";
+import {Users} from "./components/Users/Users";
 
 
 const App = () => {
@@ -18,10 +19,11 @@ const App = () => {
               <Navbar />
               <div className={s.app_wrapper_content}>
                   <Routes>
-                      <Route path='/' element={<Profile />} />
-                      <Route path='/dialogs/*' element={<DialogsContainer />}/>
+                      <Route path='/profile/*' element={<Profile />} />
+                      <Route path='/dialogs/*' element={<Dialogs />}/>
                       <Route path='/friends/*' element={<Friends/>}/>
                       <Route path='/news/*' element={<News/>}/>
+                          <Route path='/users/*' element={<Users/>}/>
                   </Routes>
               </div>
           </div>

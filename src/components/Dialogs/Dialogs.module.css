@@ -20,6 +20,7 @@
 .messages textarea {
     margin: 25px 15px;
     width: 94%;
+    outline: none;
 }
 
 .messages button {

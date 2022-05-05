@@ -3,7 +3,7 @@
     grid-area: navbar;
     margin-right: 5px;
     background-color: antiquewhite;
-
+    width: 250px;
 }
 
 .navbar a {
