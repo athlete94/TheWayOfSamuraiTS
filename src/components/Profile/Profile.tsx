@@ -4,16 +4,18 @@ import React, {useEffect} from "react";
 import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../redux/store";
-import {ProfileStateType, setUserProfileTC} from "../../redux/profileReducer";
-import {GetUserProfileResponceType, ProfileApi} from "../../api/ProfileApi";
+import {ProfileStateType, setUserProfileTC, setUserStatusTC} from "../../redux/profileReducer";
+import {useParams} from "react-router-dom";
 
 const Profile = () => {
     let dispatch = useDispatch()
 
-    // useEffect(() => {
-    //     dispatch(setUserProfileTC(2))
-    //
-    // }, [])
+    let {userId} = useParams()
+
+    useEffect(() => {
+        dispatch(setUserProfileTC(Number(userId)))
+        dispatch(setUserStatusTC(Number(userId)))
+    }, [userId])
 
     let {userProfile, status} = useSelector<AppStateType, ProfileStateType>(state => state.profileReducer)
 

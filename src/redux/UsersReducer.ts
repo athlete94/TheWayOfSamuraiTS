@@ -133,22 +133,26 @@ export const setLoading = (loading: boolean) => {
 // thunk creactors
 export const setUsersTC = (users: Array<UsersType>, currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
     usersApi.getUsers(currentPage, pageSize)
-        .then(response => {
+        .then(res => {
                 dispatch(setLoading(false))
                 //dispatch(setTotalUsersCount(response.data.totalCount))
-                dispatch(setUsers(response.data.items))
+                dispatch(setUsers(res.data.items))
             }
         )
 }
 export const followUserTC = (userId: number, followed: boolean) => (dispatch: Dispatch) => {
     usersApi.follow(userId)
         .then(res => {
-            dispatch(followUnfollow(userId, followed))
+            if (res.data.resultCode === 0) {
+                dispatch(followUnfollow(userId, followed))
+            }
         })
 }
 export const deleteUserTC = (userId: number, followed: boolean) => (dispatch: Dispatch) => {
     usersApi.unfollow(userId)
         .then(res => {
-            dispatch(followUnfollow(userId, followed))
+            if (res.data.resultCode === 0) {
+                dispatch(followUnfollow(userId, followed))
+            }
         })
 }

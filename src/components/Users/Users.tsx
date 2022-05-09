@@ -9,7 +9,6 @@ import {
 } from "../../redux/UsersReducer";
 import {User} from "./User/User";
 import s from './Users.module.css'
-import set = Reflect.set;
 import {Preloader} from "../Preloader/Preloader";
 
 export const Users = () => {
@@ -73,3 +72,5 @@ export const Users = () => {
         </div>
     );
 };
+
+

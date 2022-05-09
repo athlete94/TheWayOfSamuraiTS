@@ -7,6 +7,7 @@ const ADD_POST = 'ADD_POST'
 const CHANGE_TEXT_INPUT = 'CHANGE_TEXT_INPUT'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_USER_STATUS = 'SET_USER_STATUS'
+const UPDATE_STATUS = 'UPDATE_STATUS'
 
 export type PostsType = {
     id: string
@@ -19,13 +20,13 @@ let initialState = {
     posts: [] as Array<PostsType>,
     textInput: '',
     userProfile: {
-        userId: 2,
+        userId: 18495,
         lookingForAJob: true,
-        lookingForAJobDescription: '',
+        lookingForAJobDescription: 'ищуууу',
         fullName: 'Aza',
         contacts: {},
-        github: '',
-        vk: '',
+        github: 'github.com/athlete94',
+        vk: 'vk.com/athlete_94',
         facebook: '',
         instagram: '',
         twitter: '',
@@ -42,10 +43,10 @@ let initialState = {
 
 
 export const profileReducer = (state: ProfileStateType = initialState, action: profileReducerActionType): ProfileStateType => {
-    switch(action.type) {
+    switch (action.type) {
         case ADD_POST:
             let newPost = {id: v1(), text: action.payload.text}
-            return {...state, posts:[newPost, ...state.posts]}
+            return {...state, posts: [newPost, ...state.posts]}
         case CHANGE_TEXT_INPUT:
             return {...state, textInput: action.payload.text}
         case SET_USER_PROFILE:
@@ -54,6 +55,7 @@ export const profileReducer = (state: ProfileStateType = initialState, action: p
                 userProfile: action.payload.user
             }
         case SET_USER_STATUS:
+        case UPDATE_STATUS:
             return {
                 ...state,
                 status: action.payload.status
@@ -64,7 +66,11 @@ export const profileReducer = (state: ProfileStateType = initialState, action: p
 
 }
 
-export type profileReducerActionType = addPostACType | changeInputTextActionType | SetUserProfileType | SetUserStatusType
+export type profileReducerActionType = addPostACType
+    | changeInputTextActionType
+    | SetUserProfileType
+    | SetUserStatusType
+    | UpdateStatusType
 
 type addPostACType = ReturnType<typeof addPost>
 export const addPost = (text: string) => {
@@ -73,7 +79,7 @@ export const addPost = (text: string) => {
         payload: {
             text
         }
-    }as const
+    } as const
 }
 
 type changeInputTextActionType = ReturnType<typeof changeInputText>
@@ -83,17 +89,18 @@ export const changeInputText = (text: string) => {
         payload: {
             text,
         },
-    }as const
+    } as const
 }
 
 type SetUserProfileType = ReturnType<typeof setUserProfile>
 export const setUserProfile = (user: GetUserProfileResponceType) => {
+
     return {
         type: SET_USER_PROFILE,
         payload: {
             user
         }
-    }as const
+    } as const
 }
 type SetUserStatusType = ReturnType<typeof setUserStatus>
 export const setUserStatus = (userId: number, status: string) => {
@@ -103,21 +110,40 @@ export const setUserStatus = (userId: number, status: string) => {
             userId,
             status,
         }
-    }as const
+    } as const
+}
+
+type UpdateStatusType = ReturnType<typeof updateStatus>
+export const updateStatus = (status: string) => {
+    return {
+        type: 'UPDATE_STATUS',
+        payload: {
+            status,
+        }
+    } as const
 }
 
 //thunk creators
 
 export const setUserProfileTC = (userId: number) => (dispatch: Dispatch) => {
+    debugger
     ProfileApi.getUserProfile(userId)
         .then(res => {
             dispatch(setUserProfile(res.data))
-            debugger
         })
 }
 export const setUserStatusTC = (userId: number) => (dispatch: Dispatch) => {
     ProfileApi.getUserStatus(userId)
         .then(res => {
             dispatch(setUserStatus(userId, res.data))
+        })
+}
+
+export const UpdateStatusTC = (status: string) => (dispatch: Dispatch) => {
+    ProfileApi.updateStatus(status)
+        .then(res => {
+            if(res.data.resultCode === 0) {
+                dispatch(updateStatus(status))
+            }
         })
 }

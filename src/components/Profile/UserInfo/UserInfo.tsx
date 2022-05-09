@@ -1,7 +1,8 @@
 import s from './UserInfo.module.css'
 import {GetUserProfileResponceType} from "../../../api/ProfileApi";
 import {useDispatch} from "react-redux";
-import {setUserProfileTC} from "../../../redux/profileReducer";
+import {setUserProfileTC, UpdateStatusTC} from "../../../redux/profileReducer";
+import {EditableSpan} from "../../EditableSpan/EditableSpan";
 
 type UserInfoType = {
     userProfile: GetUserProfileResponceType,
@@ -17,6 +18,11 @@ const UserInfo = ({userProfile, status}: UserInfoType) => {
         instagram,
         photos
     } = userProfile
+    let dispatch = useDispatch()
+
+    const updateStatus = (status: string) => {
+        dispatch(UpdateStatusTC(status))
+    }
 
 
     return <div className={s.user_info}>
@@ -26,11 +32,17 @@ const UserInfo = ({userProfile, status}: UserInfoType) => {
                 alt=""/>
         </div>
 
-
         <div className={s.description}>
             <div className={s.fullName}>{fullName}</div>
-            <div className={s.status}>{status}</div>
+            <div className={s.status}>
+                <EditableSpan title={status} callback={updateStatus} />
+            </div>
             <div>{lookingForAJobDescription && `Job: ${lookingForAJobDescription}`}</div>
+            <div>
+                Social:
+                <div>{vk}</div>
+                <div>{github}</div>
+            </div>
         </div>
     </div>
 }

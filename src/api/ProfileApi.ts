@@ -15,7 +15,17 @@ export const ProfileApi = {
     },
     getUserStatus(userId: number) {
         return instance.get(`profile/status/${userId}`)
+    },
+    updateStatus(status: string) {
+        return instance.put<ResponceType>('profile/status', {status})
     }
+}
+
+
+export type ResponceType = {
+    resultCode: number,
+    messages: string[],
+    data: {}
 }
 
 export type GetUserProfileResponceType = {

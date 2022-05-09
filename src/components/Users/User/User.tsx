@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './User.module.css'
-import {NavLink} from "react-router-dom";
+import {NavLink, useParams} from "react-router-dom";
 import {setUserProfileTC, setUserStatusTC} from "../../../redux/profileReducer";
 import {useDispatch} from "react-redux";
 
@@ -28,16 +28,11 @@ export const User = (props: UserPropsType) => {
         photos
     } = props
 
-    let dispatch =  useDispatch()
-    const goUserProfile = () => {
-        dispatch(setUserProfileTC(id))
-        dispatch(setUserStatusTC(id))
-    }
 
     return (
         <div className={s.user}>
                 <div className={s.img}>
-                    <NavLink to={`/profile/${id}`} onClick={goUserProfile}>
+                    <NavLink to={`/profile/${id}`} >
                         <img
                             src={photos.small ? photos.small : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrW-Jw-ZMy8KVpsK728K3CAEogswHduRgqog&usqp=CAU"}/>
                     </NavLink>
