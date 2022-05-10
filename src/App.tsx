@@ -9,6 +9,8 @@ import News from "./components/News/News";
 import React from "react";
 import Dialogs from "./components/Dialogs/Dialogs";
 import {Users} from "./components/Users/Users";
+import {Login} from "./components/Login/Login";
+import {RequireAuth} from "./components/Redirect/RequireAuth";
 
 
 const App = () => {
@@ -19,11 +21,12 @@ const App = () => {
                 <Navbar/>
                 <div className={s.app_wrapper_content}>
                     <Routes>
-                        <Route path='/profile/:userId' element={<Profile/>}/>
-                        <Route path='/dialogs/*' element={<Dialogs/>}/>
-                        <Route path='/friends/*' element={<Friends/>}/>
+                        <Route path='/profile/:userId' element={<RequireAuth><Profile/></RequireAuth>}/>
+                        <Route path='/dialogs/*' element={<RequireAuth><Dialogs/></RequireAuth>}/>
+                        <Route path='/friends/*' element={<RequireAuth><Friends/></RequireAuth>}/>
                         <Route path='/news/*' element={<News/>}/>
                         <Route path='/users/*' element={<Users/>}/>
+                        <Route path='/login/*' element={<Login/>}/>
                     </Routes>
                 </div>
             </div>

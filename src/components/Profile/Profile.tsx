@@ -7,7 +7,8 @@ import {AppStateType} from "../../redux/store";
 import {ProfileStateType, setUserProfileTC, setUserStatusTC} from "../../redux/profileReducer";
 import {useParams} from "react-router-dom";
 
-const Profile = () => {
+export const Profile = () => {
+
     let dispatch = useDispatch()
 
     let {userId} = useParams()
@@ -19,6 +20,8 @@ const Profile = () => {
 
     let {userProfile, status} = useSelector<AppStateType, ProfileStateType>(state => state.profileReducer)
 
+
+
     return <div className={s.profile}>
         <div className={s.content_image}>
             <img src='https://static.dw.com/image/44124169_403.jpg' alt=""/>
@@ -28,5 +31,3 @@ const Profile = () => {
         <MyPostsContainer/>
     </div>
 }
-
-export {Profile}

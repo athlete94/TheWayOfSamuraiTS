@@ -3,6 +3,7 @@ import s from './User.module.css'
 import {NavLink, useParams} from "react-router-dom";
 import {setUserProfileTC, setUserStatusTC} from "../../../redux/profileReducer";
 import {useDispatch} from "react-redux";
+import {setDisabled} from "../../../redux/UsersReducer";
 
 
 type UserPropsType = {
@@ -14,7 +15,8 @@ type UserPropsType = {
         small: null,
         large: null,
     }
-    followHandler: (id: number, followed: boolean) => void
+    followHandler: (id: number, followed: boolean) => void,
+    toggleFollowing: number[]
 }
 
 export const User = (props: UserPropsType) => {
@@ -25,21 +27,26 @@ export const User = (props: UserPropsType) => {
         status,
         followed,
         followHandler,
-        photos
+        photos,
+        toggleFollowing
     } = props
 
 
     return (
         <div className={s.user}>
-                <div className={s.img}>
-                    <NavLink to={`/profile/${id}`} >
-                        <img
-                            src={photos.small ? photos.small : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrW-Jw-ZMy8KVpsK728K3CAEogswHduRgqog&usqp=CAU"}/>
-                    </NavLink>
-                    {
+            <div className={s.img}>
+                <NavLink to={`/profile/${id}`}>
+                    <img
+                        src={photos.small ? photos.small : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrW-Jw-ZMy8KVpsK728K3CAEogswHduRgqog&usqp=CAU"}/>
+                </NavLink>
+                {
                     followed ?
-                        <button onClick={() => followHandler(id, false)}>Unfollow</button> :
-                        <button onClick={() => followHandler(id, true)}>Follow</button>
+                        <button
+                            onClick={() => followHandler(id, false)}
+                            disabled={toggleFollowing.some(i => i === id)}>Unfollow</button> :
+                        <button
+                            onClick={() => followHandler(id, true)}
+                            disabled={toggleFollowing.some(i => i === id)}>Follow</button>
                 }
             </div>
             <div className={s.info}>

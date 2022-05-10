@@ -2,14 +2,15 @@ import React from "react";
 import s from './Dialogs.module.css'
 import Dialog from "./Dialog/Dialog";
 import {AppStateType} from "../../redux/store";
-import {DialogsStateType, DialogsType} from "../../redux/dialogsReducer";
+import {DialogsStateType} from "../../redux/dialogsReducer";
 import {useSelector} from "react-redux";
 import {MessagesContainer} from "./Messages/MessagesContainer";
 
 
 const Dialogs = () => {
-    // const  = useSelector<AppStateType, Array<DialogsType>>(state => state.dialogsReducer.dialogs)
+
     const {dialogs, messages, messageText} = useSelector<AppStateType, DialogsStateType>(state => state.dialogsReducer)
+
 
     //UI
     return <div className={s.dialogs}>

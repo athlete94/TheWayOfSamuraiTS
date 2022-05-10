@@ -18,7 +18,8 @@ export const Users = () => {
         pageSize,
         totalUsersCount,
         currentPage,
-        loading
+        loading,
+        toggleFollowing
     } = useSelector<AppStateType, UsersInitialStateType>(state => state.UsersReducer)
 
     const dispatch = useDispatch()
@@ -64,6 +65,7 @@ export const Users = () => {
                         name={u.name}
                         photos={u.photos}
                         status={u.status}
+                        toggleFollowing={toggleFollowing}
                         followed={u.followed}
                         followHandler={followHandler}
                     />
