@@ -4,6 +4,10 @@
     background-color: antiquewhite;
     margin-bottom: 5px;
     width: 1200px;
+
+
+    display: flex;
+    justify-content: space-between;
 }
   
 .logo {
@@ -11,8 +15,10 @@
     padding: 2px 0 0 7px;
 }
 
-.login {
-    float: right;
+.header_block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: end;
 }
-  
   

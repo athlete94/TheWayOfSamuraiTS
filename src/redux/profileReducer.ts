@@ -2,6 +2,8 @@ import {v1} from "uuid";
 import {Dispatch} from "redux";
 import {ProfileApi} from "../api/ProfileApi";
 import {GetUserProfileResponceType} from '../api/ProfileApi'
+import {AppReducerActionType, setError, setStatus} from "./appReducer";
+import {AxiosError} from "axios";
 
 const ADD_POST = 'ADD_POST'
 const CHANGE_TEXT_INPUT = 'CHANGE_TEXT_INPUT'
@@ -20,7 +22,7 @@ let initialState = {
     posts: [] as Array<PostsType>,
     textInput: '',
     userProfile: {
-        userId: 18495,
+        userId: 0,
         lookingForAJob: true,
         lookingForAJobDescription: 'ищуууу',
         fullName: 'Aza',
@@ -71,6 +73,7 @@ export type profileReducerActionType = addPostACType
     | SetUserProfileType
     | SetUserStatusType
     | UpdateStatusType
+    | AppReducerActionType
 
 type addPostACType = ReturnType<typeof addPost>
 export const addPost = (text: string) => {
@@ -126,24 +129,38 @@ export const updateStatus = (status: string) => {
 //thunk creators
 
 export const setUserProfileTC = (userId: number) => (dispatch: Dispatch) => {
-    debugger
+    dispatch(setStatus('loading'))
     ProfileApi.getUserProfile(userId)
         .then(res => {
+            dispatch(setStatus('idle'))
             dispatch(setUserProfile(res.data))
         })
 }
 export const setUserStatusTC = (userId: number) => (dispatch: Dispatch) => {
     ProfileApi.getUserStatus(userId)
         .then(res => {
-            dispatch(setUserStatus(userId, res.data))
+            if (res.data)
+                dispatch(setUserStatus(userId, res.data))
         })
 }
 
 export const UpdateStatusTC = (status: string) => (dispatch: Dispatch) => {
+    dispatch(setStatus('statusUpdating'))
     ProfileApi.updateStatus(status)
         .then(res => {
-            if(res.data.resultCode === 0) {
+            if (res.data.resultCode === 0) {
                 dispatch(updateStatus(status))
+            } else {
+                dispatch(setError(res.data.messages[0]))
             }
+            debugger
+            dispatch(setStatus('idle'))
+
+        })
+        .catch((err: AxiosError) => {
+            dispatch(setError(err.message))
+            dispatch(setStatus('idle'))
         })
 }
+
+

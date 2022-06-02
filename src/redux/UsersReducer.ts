@@ -1,10 +1,11 @@
 import {Dispatch} from "redux";
 import {usersApi} from "../api/UsersApi";
+import {AxiosError} from "axios";
+import {AppReducerActionType, setError, setStatus} from "./appReducer";
 
 const FOLLOW = 'FOLLOW'
 const SET_USERS = 'SET_USERS'
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
-const SET_LOADING = 'SET_LOADING'
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
 const SET_DISABLED = 'SET_DISABLED'
 
@@ -24,7 +25,6 @@ export type UsersInitialStateType = {
     pageSize: number,
     totalUsersCount: number,
     currentPage: number,
-    loading: boolean,
     toggleFollowing: number[]
 }
 export const usersInitialState: UsersInitialStateType = {
@@ -32,7 +32,6 @@ export const usersInitialState: UsersInitialStateType = {
     pageSize: 50,
     totalUsersCount: 100,
     currentPage: 1,
-    loading: false,
     toggleFollowing: []
 }
 
@@ -60,11 +59,6 @@ export const UsersReducer = (state: UsersInitialStateType = usersInitialState, a
                 ...state,
                 totalUsersCount: action.payload.totalUsersCount
             }
-        case SET_LOADING:
-            return {
-                ...state,
-                loading: action.payload.loading
-            }
         case SET_DISABLED:
             return {
                 ...state,
@@ -83,8 +77,8 @@ export type UsersReducerActionType =
     setUsersType |
     SetCurrentPageType |
     SetTotalUsersCountType |
-    SetLoadingType |
     SetDisabledType
+    | AppReducerActionType
 
 type FollowActionType = ReturnType<typeof followUnfollow>
 export const followUnfollow = (id: number, followed: boolean) => {
@@ -127,15 +121,6 @@ export const setTotalUsersCount = (totalUsersCount: number) => {
     } as const
 }
 
-export type SetLoadingType = ReturnType<typeof setLoading>
-export const setLoading = (loading: boolean) => {
-    return {
-        type: SET_LOADING,
-        payload: {
-            loading,
-        }
-    } as const
-}
 
 type SetDisabledType = ReturnType<typeof setDisabled>
 export const setDisabled = (userId: number, isDisabled: boolean) => {
@@ -145,27 +130,40 @@ export const setDisabled = (userId: number, isDisabled: boolean) => {
             isDisabled,
             userId,
         }
-    }as const
+    } as const
 }
 
 // thunk creactors
 export const setUsersTC = (users: Array<UsersType>, currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
+    dispatch(setStatus('loading'))
     usersApi.getUsers(currentPage, pageSize)
         .then(res => {
-                dispatch(setLoading(false))
+                dispatch(setStatus("idle"))
                 //dispatch(setTotalUsersCount(response.data.totalCount))
                 dispatch(setUsers(res.data.items))
             }
         )
+        .catch((err: AxiosError) => {
+            dispatch(setError(err.message))
+        })
+    // let res = await usersApi.getUsers(currentPage, pageSize)
+    // dispatch(setLoading(false))
+    // dispatch(setUsers(res.data.items))
+
 }
 export const followUserTC = (userId: number, followed: boolean) => (dispatch: Dispatch) => {
-    dispatch(setDisabled(userId,true))
+    dispatch(setDisabled(userId, true))
     usersApi.follow(userId)
         .then(res => {
             if (res.data.resultCode === 0) {
-                dispatch(setDisabled(userId,false))
+                dispatch(setDisabled(userId, false))
                 dispatch(followUnfollow(userId, followed))
+            } else {
+                dispatch(setError(res.data.messages[0]))
             }
+        })
+        .catch((err: AxiosError) => {
+            dispatch(setError(err.message))
         })
 }
 export const deleteUserTC = (userId: number, followed: boolean) => (dispatch: Dispatch) => {
@@ -175,6 +173,11 @@ export const deleteUserTC = (userId: number, followed: boolean) => (dispatch: Di
             if (res.data.resultCode === 0) {
                 dispatch(setDisabled(userId, false))
                 dispatch(followUnfollow(userId, followed))
+            } else {
+                dispatch(setError(res.data.messages[0]))
             }
+        })
+        .catch((err: AxiosError) => {
+            dispatch(setError(err.message))
         })
 }

@@ -5,14 +5,18 @@ import {AppStateType} from "../../redux/store";
 import {DialogsStateType} from "../../redux/dialogsReducer";
 import {useSelector} from "react-redux";
 import {MessagesContainer} from "./Messages/MessagesContainer";
+import {Navigate} from "react-router-dom";
 
 
 const Dialogs = () => {
 
     const {dialogs, messages, messageText} = useSelector<AppStateType, DialogsStateType>(state => state.dialogsReducer)
+    let isLogged = useSelector<AppStateType, boolean>(state => state.AuthReducer.isLogin)
 
+    if(!isLogged) {
+        return <Navigate to={'/login'} />
+    }
 
-    //UI
     return <div className={s.dialogs}>
         <div className={s.dialogs_items}>
             {dialogs.map(d => <Dialog key={d.id} name={d.name} id={d.id}/>)}

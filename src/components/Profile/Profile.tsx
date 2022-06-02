@@ -5,29 +5,46 @@ import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../redux/store";
 import {ProfileStateType, setUserProfileTC, setUserStatusTC} from "../../redux/profileReducer";
-import {useParams} from "react-router-dom";
+import {Navigate, useParams} from "react-router-dom";
+import {Preloader} from "../Preloader/circle/Preloader";
+import {StatusType} from "../../redux/appReducer";
+
 
 export const Profile = () => {
 
+    let statusLoad = useSelector<AppStateType, StatusType>(state => state.AppReducer.status)
+    let isLogin = useSelector<AppStateType, boolean>(state => state.AuthReducer.isLogin)
+    let {userProfile, status} = useSelector<AppStateType, ProfileStateType>(state => state.profileReducer)
     let dispatch = useDispatch()
 
     let {userId} = useParams()
 
     useEffect(() => {
         dispatch(setUserProfileTC(Number(userId)))
-        dispatch(setUserStatusTC(Number(userId)))
+
     }, [userId])
 
-    let {userProfile, status} = useSelector<AppStateType, ProfileStateType>(state => state.profileReducer)
+    useEffect(() => {
+        dispatch(setUserStatusTC(Number(userId)))
+    },[status, userId])
 
 
+    if(!isLogin) {
+        return <Navigate to={'/login'} />
+    }
 
     return <div className={s.profile}>
         <div className={s.content_image}>
             <img src='https://static.dw.com/image/44124169_403.jpg' alt=""/>
         </div>
 
-        <UserInfo userProfile={userProfile} status={status}/>
-        <MyPostsContainer/>
+        {statusLoad === 'loading' ? <Preloader/> :
+            <div>
+
+                <UserInfo userProfile={userProfile} status={status}/>
+                <MyPostsContainer/>
+            </div>
+        }
+
     </div>
 }

@@ -4,12 +4,13 @@ import {AppStateType} from "../../redux/store";
 import {
     deleteUserTC,
     followUserTC,
-    setCurrentPage, setLoading, setUsersTC,
+    setCurrentPage, setUsersTC,
     UsersInitialStateType,
 } from "../../redux/UsersReducer";
 import {User} from "./User/User";
 import s from './Users.module.css'
-import {Preloader} from "../Preloader/Preloader";
+import {Preloader} from "../Preloader/circle/Preloader";
+import {StatusType} from "../../redux/appReducer";
 
 export const Users = () => {
 
@@ -18,14 +19,13 @@ export const Users = () => {
         pageSize,
         totalUsersCount,
         currentPage,
-        loading,
         toggleFollowing
     } = useSelector<AppStateType, UsersInitialStateType>(state => state.UsersReducer)
+    const statusLoad = useSelector<AppStateType, StatusType>(state => state.AppReducer.status)
 
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(setLoading(true))
         dispatch(setUsersTC(users, currentPage, pageSize))
     }, [])
 
@@ -37,7 +37,6 @@ export const Users = () => {
             dispatch(deleteUserTC(id, followed))
     }
     const onClickHandler = (currPage: number) => {
-        dispatch(setLoading(true))
         dispatch(setCurrentPage(currPage))
         dispatch(setUsersTC(users, currPage, pageSize))
     }
@@ -50,7 +49,7 @@ export const Users = () => {
 
     return (
         <div className={s.users_block}>
-            {loading &&  <Preloader /> /*loading*/ }
+            {statusLoad === 'loading' &&  <Preloader /> /*loading*/ }
 
             <div className={s.pagination}>
                 {pages.map(p => <span
