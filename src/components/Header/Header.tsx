@@ -25,8 +25,7 @@ const Header = () => {
         <div className={s.login}>
             {isLogin &&
                 <div className={s.header_block}>
-
-                    {statusLoad === 'loading' ?  '' : <div>{login}</div>}
+                    <div>{login}</div>
                     <div><button onClick={logoutHandler}>logout</button></div>
                 </div>
                 }
