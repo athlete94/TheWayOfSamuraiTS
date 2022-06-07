@@ -2,10 +2,10 @@ export type StatusType = 'loading' | 'idle' | 'statusUpdating'
 
 type InitialStateAppType = {
     status: StatusType
-    error: string
+    error: null | string
 }
 export const initialState: InitialStateAppType = {
-    error: '',
+    error: null,
     status: "idle",
 }
 
@@ -30,7 +30,7 @@ export const AppReducer = (state: InitialStateAppType = initialState, action: Ap
 export type AppReducerActionType = SetErrorType | SetStatusType
 
 export type SetErrorType = ReturnType<typeof setError>
-export const setError = (error: string) => {
+export const setError = (error: null | string) => {
     return {
         type: 'SET_ERROR',
         error

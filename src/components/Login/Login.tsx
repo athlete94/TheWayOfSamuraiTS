@@ -7,10 +7,15 @@ import {AppStateType} from "../../redux/store";
 import {Navigate} from "react-router-dom";
 import {setError} from "../../redux/appReducer";
 
+type FormikErrorType = {
+    email?: string
+    password?: string
+    rememberMe?: boolean
+}
+
 export const Login = () => {
 
     let isLogin = useSelector<AppStateType, boolean>(state => state.AuthReducer.isLogin)
-    let error = useSelector<AppStateType, string>(state => state.AppReducer.error)
     const dispatch = useDispatch()
 
     let formik = useFormik({
@@ -23,6 +28,16 @@ export const Login = () => {
             dispatch(loginTC(values))
             formik.resetForm()
         },
+        validate: (values) => {
+            const errors: FormikErrorType = {}
+            if (!values.email) {
+                errors.email = 'email is required';
+            }
+            if (!values.password) {
+                errors.password = 'password is required'
+            }
+            return errors
+        }
 
     })
 
@@ -41,12 +56,14 @@ export const Login = () => {
                         {...formik.getFieldProps('email')}
                     />
                 </div>
+                {formik.touched.email && formik.errors.email ? <div style={{color: 'red', textAlign: 'left'}}>{formik.errors.email}</div> : null}
                 <div className={s.login_input}>
                     <input type="password"
                            placeholder='password'
                            {...formik.getFieldProps('password')}
                     />
                 </div>
+                {formik.touched.password && formik.errors.password ? <div style={{color: 'red', textAlign: 'left'}}>{formik.errors.password}</div> : null}
                 <div className={s.checkbox}><label>
                     <input type="checkbox"
                            {...formik.getFieldProps('rememberMe')}
@@ -57,8 +74,6 @@ export const Login = () => {
                 <div className={s.loginBtn}>
                     <button type={'submit'}>LOGIN</button>
                 </div>
-
-                <span style={{color: 'red'}}>{error && error}</span>
 
             </form>
         </div>

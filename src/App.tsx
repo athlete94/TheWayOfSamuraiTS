@@ -14,6 +14,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AuthInitialStateType, setIsAuthTC} from "./redux/authReducer";
 import {AppStateType} from "./redux/store";
 import {CircularProgress} from "@mui/material";
+import CustomizedSnackbars from "./components/Errors/Snackbar";
 
 
 
@@ -48,6 +49,7 @@ const App = () => {
                             <Route path='/users/*' element={<Users/>}/>
                             <Route path='/login/*' element={<Login/>}/>
                         </Routes>
+                        <CustomizedSnackbars />
                     </div>
                 </div>
             </BrowserRouter>
