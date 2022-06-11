@@ -10,19 +10,18 @@ import React, {useEffect} from "react";
 import Dialogs from "./components/Dialogs/Dialogs";
 import {Users} from "./components/Users/Users";
 import {Login} from "./components/Login/Login";
-import {useDispatch, useSelector} from "react-redux";
-import {AuthInitialStateType, setIsAuthTC} from "./redux/authReducer";
-import {AppStateType} from "./redux/store";
+import {setIsAuthTC} from "./redux/authReducer";
 import {CircularProgress} from "@mui/material";
 import CustomizedSnackbars from "./components/Errors/Snackbar";
+import {useAppDispatch, useAppSelector} from "./redux/hooks";
 
 
 
 
 const App = () => {
-    let isAuth = useSelector<AppStateType, boolean>(state => state.AuthReducer.isAuth)
+    let isAuth = useAppSelector(state => state.AuthReducer.isAuth)
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         dispatch(setIsAuthTC())

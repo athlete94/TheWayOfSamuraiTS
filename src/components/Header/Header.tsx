@@ -1,19 +1,11 @@
 import s from './Header.module.css'
-import {NavLink} from "react-router-dom";
-import {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {AuthInitialStateType, logoutTC, setIsAuthTC} from "../../redux/authReducer";
-import {AppStateType} from "../../redux/store";
-import {StatusType} from "../../redux/appReducer";
-import {Dots} from "../Preloader/dots/dots";
+import {logoutTC} from "../../redux/authReducer";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 
 
 const Header = () => {
-    const isLogin = useSelector<AppStateType, boolean>(state => state.AuthReducer.isLogin)
-    const login = useSelector<AppStateType, string>(state => state.AuthReducer.login)
-    const statusLoad = useSelector<AppStateType, StatusType>(state => state.AppReducer.status)
-
-    const dispatch = useDispatch()
+    const {isLogin, login} = useAppSelector(state => state.AuthReducer)
+    const dispatch = useAppDispatch()
 
 
     const logoutHandler = () => [

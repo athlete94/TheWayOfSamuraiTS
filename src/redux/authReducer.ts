@@ -71,7 +71,7 @@ export const setIsAuthTC = (): AppThunk => async dispatch => {
 }
 
 
-export const loginTC = (data: LoginRequestParams): AppThunk => (dispatch) => {
+export const loginTC = (data: LoginRequestParams): AppThunk => dispatch => {
     authApi.login(data)
         .then(res => {
             if (res.data.resultCode === 0) {

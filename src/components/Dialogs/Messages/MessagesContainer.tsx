@@ -1,14 +1,12 @@
 import React, {ChangeEvent} from 'react';
-import {useDispatch, useSelector} from "react-redux";
 import {
     addMessage,
     changeMessageText,
     dialogsReducerActionType,
     DialogsStateType, MessagesType,
 } from "../../../redux/dialogsReducer";
-import {AppStateType} from "../../../redux/store";
-import {Dispatch} from "redux";
 import {Messages} from "./Messages";
+import {useAppDispatch} from "../../../redux/hooks";
 
 type MessagesContainerType = {
     messageText: string,
@@ -17,7 +15,7 @@ type MessagesContainerType = {
 
 export const MessagesContainer = ({messageText, messages}: MessagesContainerType) => {
 
-    const dispatch = useDispatch<Dispatch<dialogsReducerActionType>>()
+    const dispatch = useAppDispatch()
 
     const changeText = (e: ChangeEvent<HTMLTextAreaElement>) => {
         dispatch(changeMessageText(e.currentTarget.value.trimStart()))

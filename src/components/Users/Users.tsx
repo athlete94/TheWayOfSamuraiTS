@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {AppStateType} from "../../redux/store";
 import {
     deleteUserTC,
     followUserTC,
@@ -11,6 +10,7 @@ import {User} from "./User/User";
 import s from './Users.module.css'
 import {Preloader} from "../Preloader/circle/Preloader";
 import {StatusType} from "../../redux/appReducer";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 
 export const Users = () => {
 
@@ -20,10 +20,10 @@ export const Users = () => {
         totalUsersCount,
         currentPage,
         toggleFollowing
-    } = useSelector<AppStateType, UsersInitialStateType>(state => state.UsersReducer)
-    const statusLoad = useSelector<AppStateType, StatusType>(state => state.AppReducer.status)
+    } = useAppSelector(state => state.UsersReducer)
+    const statusLoad = useAppSelector(state => state.AppReducer.status)
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         dispatch(setUsersTC(users, currentPage, pageSize))

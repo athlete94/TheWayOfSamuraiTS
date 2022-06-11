@@ -1,11 +1,10 @@
 import React from 'react';
 import {useFormik} from "formik";
-import {useDispatch, useSelector} from "react-redux";
 import {loginTC, setIsAuthTC} from "../../redux/authReducer";
 import s from './Login..module.css'
-import {AppStateType} from "../../redux/store";
 import {Navigate} from "react-router-dom";
 import {setError} from "../../redux/appReducer";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 
 type FormikErrorType = {
     email?: string
@@ -15,8 +14,8 @@ type FormikErrorType = {
 
 export const Login = () => {
 
-    let isLogin = useSelector<AppStateType, boolean>(state => state.AuthReducer.isLogin)
-    const dispatch = useDispatch()
+    let isLogin = useAppSelector(state => state.AuthReducer.isLogin)
+    const dispatch = useAppDispatch()
 
     let formik = useFormik({
         initialValues: {

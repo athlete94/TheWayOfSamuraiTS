@@ -1,8 +1,8 @@
-import {applyMiddleware, combineReducers, createStore} from "redux";
+import {AnyAction, applyMiddleware, combineReducers, createStore} from "redux";
 import {profileReducer, profileReducerActionType} from "./profileReducer";
 import {dialogsReducer, dialogsReducerActionType} from "./dialogsReducer";
 import {UsersReducer, UsersReducerActionType} from "./UsersReducer";
-import thunk, {ThunkAction} from "redux-thunk";
+import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {ActionAuthType, AuthReducer} from "./authReducer";
 import {AppReducer, AppReducerActionType} from "./appReducer";
 
@@ -16,8 +16,11 @@ let rootReducer = combineReducers({
 })
 
 //state всего приложения
-export type AppStateType = ReturnType<typeof rootReducer>
+// export type AppStateType = ReturnType<typeof rootReducer>
 export let store = createStore(rootReducer, applyMiddleware(thunk))
+
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = ThunkDispatch<RootState, unknown, AnyAction>
 
 export type AppActionType =
     ActionAuthType
@@ -28,7 +31,7 @@ export type AppActionType =
 
 export type AppThunk<ReturnType = void> = ThunkAction<
     ReturnType,
-    AppStateType,
+    RootState,
     unknown,
     AppActionType
     >

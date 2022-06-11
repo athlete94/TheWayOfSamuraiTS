@@ -1,12 +1,10 @@
 import s from './UserInfo.module.css'
 import {GetUserProfileResponceType} from "../../../api/ProfileApi";
-import {useDispatch, useSelector} from "react-redux";
 import {setUserProfileTC, UpdateStatusTC} from "../../../redux/profileReducer";
 import {EditableSpan} from "../../EditableSpan/EditableSpan";
-import {AppStateType} from "../../../redux/store";
-import {SetStatusType, StatusType} from "../../../redux/appReducer";
 import {Dots} from "../../Preloader/dots/dots";
 import React, {useEffect} from "react";
+import {useAppDispatch, useAppSelector} from "../../../redux/hooks";
 
 type UserInfoType = {
     userProfile: GetUserProfileResponceType,
@@ -23,8 +21,8 @@ const UserInfo = ({userProfile, status}: UserInfoType) => {
         photos
     } = userProfile
 
-    let statusLoad = useSelector<AppStateType, StatusType>(state => state.AppReducer.status)
-    let dispatch = useDispatch()
+    let statusLoad = useAppSelector(state => state.AppReducer.status)
+    let dispatch = useAppDispatch()
 
 
     const updateStatus = (status: string) => {

@@ -4,6 +4,7 @@ import {ProfileApi} from "../api/ProfileApi";
 import {GetUserProfileResponceType} from '../api/ProfileApi'
 import {AppReducerActionType, setError, setStatus} from "./appReducer";
 import {AxiosError} from "axios";
+import {AppThunk} from "./store";
 
 const ADD_POST = 'ADD_POST'
 const CHANGE_TEXT_INPUT = 'CHANGE_TEXT_INPUT'
@@ -128,7 +129,7 @@ export const updateStatus = (status: string) => {
 
 //thunk creators
 
-export const setUserProfileTC = (userId: number) => (dispatch: Dispatch) => {
+export const setUserProfileTC = (userId: number): AppThunk => dispatch => {
     dispatch(setStatus('loading'))
     ProfileApi.getUserProfile(userId)
         .then(res => {
@@ -136,7 +137,7 @@ export const setUserProfileTC = (userId: number) => (dispatch: Dispatch) => {
             dispatch(setUserProfile(res.data))
         })
 }
-export const setUserStatusTC = (userId: number) => (dispatch: Dispatch) => {
+export const setUserStatusTC = (userId: number): AppThunk => dispatch => {
     ProfileApi.getUserStatus(userId)
         .then(res => {
             if (res.data)
@@ -144,7 +145,7 @@ export const setUserStatusTC = (userId: number) => (dispatch: Dispatch) => {
         })
 }
 
-export const UpdateStatusTC = (status: string) => (dispatch: Dispatch) => {
+export const UpdateStatusTC = (status: string): AppThunk => dispatch=> {
     dispatch(setStatus('statusUpdating'))
     ProfileApi.updateStatus(status)
         .then(res => {

@@ -2,20 +2,18 @@ import s from "./Profile.module.css"
 import UserInfo from "./UserInfo/UserInfo"
 import React, {useEffect} from "react";
 import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
-import {useDispatch, useSelector} from "react-redux";
-import {AppStateType} from "../../redux/store";
 import {ProfileStateType, setUserProfileTC, setUserStatusTC} from "../../redux/profileReducer";
 import {Navigate, useParams} from "react-router-dom";
 import {Preloader} from "../Preloader/circle/Preloader";
-import {StatusType} from "../../redux/appReducer";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 
 
 export const Profile = () => {
 
-    let statusLoad = useSelector<AppStateType, StatusType>(state => state.AppReducer.status)
-    let isLogin = useSelector<AppStateType, boolean>(state => state.AuthReducer.isLogin)
-    let {userProfile, status} = useSelector<AppStateType, ProfileStateType>(state => state.profileReducer)
-    let dispatch = useDispatch()
+    let statusLoad = useAppSelector(state => state.AppReducer.status)
+    let isLogin = useAppSelector(state => state.AuthReducer.isLogin)
+    let {userProfile, status} = useAppSelector(state => state.profileReducer)
+    let dispatch = useAppDispatch()
 
     let {userId} = useParams()
 

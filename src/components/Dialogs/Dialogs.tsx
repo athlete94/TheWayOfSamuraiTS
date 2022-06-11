@@ -1,17 +1,15 @@
 import React from "react";
 import s from './Dialogs.module.css'
 import Dialog from "./Dialog/Dialog";
-import {AppStateType} from "../../redux/store";
-import {DialogsStateType} from "../../redux/dialogsReducer";
-import {useSelector} from "react-redux";
 import {MessagesContainer} from "./Messages/MessagesContainer";
 import {Navigate} from "react-router-dom";
+import {useAppSelector} from "../../redux/hooks";
 
 
 const Dialogs = () => {
 
-    const {dialogs, messages, messageText} = useSelector<AppStateType, DialogsStateType>(state => state.dialogsReducer)
-    let isLogged = useSelector<AppStateType, boolean>(state => state.AuthReducer.isLogin)
+    const {dialogs, messages, messageText} = useAppSelector(state => state.dialogsReducer)
+    let isLogged = useAppSelector(state => state.AuthReducer.isLogin)
 
     if(!isLogged) {
         return <Navigate to={'/login'} />
