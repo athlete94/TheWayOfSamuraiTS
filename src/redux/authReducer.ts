@@ -58,6 +58,7 @@ export const setIsAuthTC = (): AppThunk => async dispatch => {
     try {
         let res = await authApi.getAuth()
         let {id: userId, email, login} = res.data.data
+        debugger
         if (res.data.resultCode === 0) {
             dispatch(setIsLogin(true))
         } else {
@@ -75,12 +76,13 @@ export const loginTC = (data: LoginRequestParams): AppThunk => dispatch => {
     authApi.login(data)
         .then(res => {
             if (res.data.resultCode === 0) {
-                dispatch(setIsAuthTC())
                 dispatch(setIsLogin(true))
             } else {
                 dispatch(setError(res.data.messages[0]))
             }
-        })
+        }).then(() => {
+        dispatch(setIsAuthTC())
+    })
         .catch((err: AxiosError) => {
             dispatch(setError(err.message))
         })

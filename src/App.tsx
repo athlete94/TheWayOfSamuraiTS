@@ -4,7 +4,7 @@ import {Navbar} from './components/Navbar/Navbar'
 import {Profile} from './components/Profile/Profile'
 import Friends from './components/Friends/Friends'
 import s from './App.module.css'
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, HashRouter, Navigate, Route, Routes} from "react-router-dom";
 import News from "./components/News/News";
 import React, {useEffect} from "react";
 import Dialogs from "./components/Dialogs/Dialogs";
@@ -20,7 +20,6 @@ import {useAppDispatch, useAppSelector} from "./redux/hooks";
 
 const App = () => {
     let isAuth = useAppSelector(state => state.AuthReducer.isAuth)
-
     const dispatch = useAppDispatch()
 
     useEffect(() => {
@@ -33,9 +32,10 @@ const App = () => {
             style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
             <CircularProgress/>
         </div>
-    }else{
+
+    }
         return (
-            <BrowserRouter>
+            <HashRouter>
                 <div className={s.App}>
                     <Header/>
                     <Navbar/>
@@ -51,9 +51,8 @@ const App = () => {
                         <CustomizedSnackbars />
                     </div>
                 </div>
-            </BrowserRouter>
+            </HashRouter>
         );
-    }
 }
 
 export default App;
