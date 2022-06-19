@@ -5,6 +5,7 @@ import {UsersReducer, UsersReducerActionType} from "./UsersReducer";
 import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {ActionAuthType, AuthReducer} from "./authReducer";
 import {AppReducer, AppReducerActionType} from "./appReducer";
+import {friendsReducer, FriendsReducerActonType} from "./friendsReducer";
 
 
 let rootReducer = combineReducers({
@@ -13,6 +14,7 @@ let rootReducer = combineReducers({
     UsersReducer,
     AuthReducer,
     AppReducer,
+    friendsReducer,
 })
 
 //state всего приложения
@@ -28,12 +30,11 @@ export type AppActionType =
     | profileReducerActionType
     | dialogsReducerActionType
     | AppReducerActionType
+    | FriendsReducerActonType
 
-export type AppThunk<ReturnType = void> = ThunkAction<
-    ReturnType,
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType,
     RootState,
     unknown,
-    AppActionType
-    >
+    AppActionType>
 //@ts-ignore
 window.store = store;

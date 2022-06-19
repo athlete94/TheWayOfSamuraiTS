@@ -46,9 +46,14 @@ const UserInfo = ({userProfile, status}: UserInfoType) => {
             </div>
             <div>{lookingForAJobDescription && `Job: ${lookingForAJobDescription}`}</div>
             <div>
-                Social:
-                <div>{vk}</div>
-                <div>{github}</div>
+                {(vk || github || instagram) &&
+                <div>
+                    Social:
+                    <div>{vk}</div>
+                    <div>{github}</div>
+                    <div>{instagram}</div>
+                </div>
+                }
             </div>
         </div>
     </div>

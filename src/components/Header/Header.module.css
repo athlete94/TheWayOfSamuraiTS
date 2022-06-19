@@ -1,13 +1,15 @@
 
 .header{
     grid-area: header;
-    background-color: antiquewhite;
-    margin-bottom: 5px;
-    width: 1200px;
-
-
+    background-color: white;
+    margin-bottom: 10px;
+    width: 1210px;
+    border-radius: 5px;
     display: flex;
     justify-content: space-between;
+    padding: 0 5px;
+
+    box-shadow: 0px 0px 5px 1px #c6d4ea;
 }
   
 .logo {

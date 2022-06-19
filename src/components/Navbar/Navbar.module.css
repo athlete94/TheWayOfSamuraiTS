@@ -1,20 +1,28 @@
-
 .navbar {
+    height: 100vh;
     grid-area: navbar;
-    margin-right: 5px;
-    background-color: antiquewhite;
+    background-color: white;
     width: 250px;
+    border-radius: 5px;
+    margin-right: 10px;
+
+    box-shadow: 0px 0px 5px 1px #c6d4ea;
 }
 
 .navbar a {
     text-decoration: none;
 }
 
+.navbar a:active {
+    color: #6992ee;
+}
+
 
 .item {
-    color: darkgray;
+    background-color: #f2f6f8;
     display: block;
     padding: 10px 5px;
+    border-radius: 5px;
 }
 
 .navLink_item {
@@ -23,7 +31,8 @@
 }
 
 .navLink_item:hover {
-    background-color: rgb(233, 218, 199);
+    background-color: #ecf1f5;
+    border-radius: 5px;
 }
   
   

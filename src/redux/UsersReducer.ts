@@ -2,6 +2,7 @@ import {Dispatch} from "redux";
 import {usersApi} from "../api/UsersApi";
 import {AxiosError} from "axios";
 import {AppReducerActionType, setError, setStatus} from "./appReducer";
+import {AppThunk} from "./store";
 
 const FOLLOW = 'FOLLOW'
 const SET_USERS = 'SET_USERS'
@@ -134,7 +135,7 @@ export const setDisabled = (userId: number, isDisabled: boolean) => {
 }
 
 // thunk creactors
-export const setUsersTC = (users: Array<UsersType>, currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
+export const setUsersTC = (currentPage: number, pageSize: number): AppThunk => dispatch => {
     dispatch(setStatus('loading'))
     usersApi.getUsers(currentPage, pageSize)
         .then(res => {
@@ -151,7 +152,7 @@ export const setUsersTC = (users: Array<UsersType>, currentPage: number, pageSiz
     // dispatch(setUsers(res.data.items))
 
 }
-export const followUserTC = (userId: number, followed: boolean) => (dispatch: Dispatch) => {
+export const followUserTC = (userId: number, followed: boolean): AppThunk => dispatch => {
     dispatch(setDisabled(userId, true))
     usersApi.follow(userId)
         .then(res => {
@@ -166,7 +167,7 @@ export const followUserTC = (userId: number, followed: boolean) => (dispatch: Di
             dispatch(setError(err.message))
         })
 }
-export const deleteUserTC = (userId: number, followed: boolean) => (dispatch: Dispatch) => {
+export const deleteUserTC = (userId: number, followed: boolean): AppThunk => dispatch => {
     dispatch(setDisabled(userId, true))
     usersApi.unfollow(userId)
         .then(res => {

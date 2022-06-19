@@ -2,7 +2,7 @@ import s from "./Profile.module.css"
 import UserInfo from "./UserInfo/UserInfo"
 import React, {useEffect} from "react";
 import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
-import {ProfileStateType, setUserProfileTC, setUserStatusTC} from "../../redux/profileReducer";
+import {setUserProfileTC, setUserStatusTC} from "../../redux/profileReducer";
 import {Navigate, useParams} from "react-router-dom";
 import {Preloader} from "../Preloader/circle/Preloader";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
@@ -18,13 +18,9 @@ export const Profile = () => {
     let {userId} = useParams()
 
     useEffect(() => {
-        dispatch(setUserProfileTC(Number(userId)))
-
-    }, [userId])
-
-    useEffect(() => {
         dispatch(setUserStatusTC(Number(userId)))
-    },[status, userId])
+        dispatch(setUserProfileTC(Number(userId)))
+    }, [userId, status])
 
 
     if(!isLogin) {

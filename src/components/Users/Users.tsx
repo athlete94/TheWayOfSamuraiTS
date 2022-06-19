@@ -1,15 +1,12 @@
 import React, {useEffect} from 'react';
-import {useDispatch, useSelector} from "react-redux";
 import {
     deleteUserTC,
     followUserTC,
     setCurrentPage, setUsersTC,
-    UsersInitialStateType,
 } from "../../redux/UsersReducer";
 import {User} from "./User/User";
 import s from './Users.module.css'
 import {Preloader} from "../Preloader/circle/Preloader";
-import {StatusType} from "../../redux/appReducer";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 
 export const Users = () => {
@@ -21,12 +18,12 @@ export const Users = () => {
         currentPage,
         toggleFollowing
     } = useAppSelector(state => state.UsersReducer)
-    const statusLoad = useAppSelector(state => state.AppReducer.status)
+    const statusLoad = useAppSelector( state => state.AppReducer.status)
 
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(setUsersTC(users, currentPage, pageSize))
+        dispatch(setUsersTC(currentPage, pageSize))
     }, [])
 
 
@@ -38,7 +35,7 @@ export const Users = () => {
     }
     const onClickHandler = (currPage: number) => {
         dispatch(setCurrentPage(currPage))
-        dispatch(setUsersTC(users, currPage, pageSize))
+        dispatch(setUsersTC(currPage, pageSize))
     }
 
     let pagesCount = Math.ceil(totalUsersCount / pageSize)

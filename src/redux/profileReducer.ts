@@ -1,5 +1,4 @@
 import {v1} from "uuid";
-import {Dispatch} from "redux";
 import {ProfileApi} from "../api/ProfileApi";
 import {GetUserProfileResponceType} from '../api/ProfileApi'
 import {AppReducerActionType, setError, setStatus} from "./appReducer";
@@ -89,7 +88,7 @@ export const addPost = (text: string) => {
 type changeInputTextActionType = ReturnType<typeof changeInputText>
 export const changeInputText = (text: string) => {
     return {
-        type: 'CHANGE_TEXT_INPUT',
+        type: CHANGE_TEXT_INPUT,
         payload: {
             text,
         },
@@ -140,8 +139,11 @@ export const setUserProfileTC = (userId: number): AppThunk => dispatch => {
 export const setUserStatusTC = (userId: number): AppThunk => dispatch => {
     ProfileApi.getUserStatus(userId)
         .then(res => {
-            if (res.data)
+            if (res.data === null)
+                dispatch(setUserStatus(userId, 'status...'))
+            else {
                 dispatch(setUserStatus(userId, res.data))
+            }
         })
 }
 
