@@ -9,11 +9,18 @@ type MyPostsPropsType = {
     textInput: string,
     addPostHandler: () => void,
     setTextInput: (e: ChangeEvent<HTMLTextAreaElement>) => void
+    deletePostHandler: (id: string) => void
 }
 
-const MyPosts = ({posts, textInput, addPostHandler, setTextInput}: MyPostsPropsType) => {
+const MyPosts = ({
+                     posts,
+                     textInput,
+                     addPostHandler,
+                     setTextInput,
+                     deletePostHandler
+                 }: MyPostsPropsType) => {
 
-    console.log('posts')
+
     return <div className={s.myPosts}>
 
         <div className={s.addPost}>
@@ -30,8 +37,11 @@ const MyPosts = ({posts, textInput, addPostHandler, setTextInput}: MyPostsPropsT
 
         <h4>Posts</h4>
         {posts.map(p => <Post
+            id={p.id}
             key={p.id}
-            text={p.text}/>)}
+            text={p.text}
+            deletePostHandler={deletePostHandler}
+        />)}
     </div>
 
 }

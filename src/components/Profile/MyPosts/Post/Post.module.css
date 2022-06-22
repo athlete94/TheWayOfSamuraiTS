@@ -1,4 +1,20 @@
 .post {
     padding: 20px 10px;
     border-bottom: 1px solid #f8f5f4;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.delBtn {
+    border: none;
+    color: #b1b4b7;
+    background-color: white;
+    width: 25px;
+    height: 25px;
+}
+
+.delBtn:hover {
+    background-color: #f8f5f4;
+    border-radius: 5px;
 }

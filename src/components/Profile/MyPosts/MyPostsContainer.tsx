@@ -1,6 +1,6 @@
 import {
     addPost,
-    changeInputText,
+    changeInputText, deletePost,
 } from "../../../redux/profileReducer";
 import MyPosts from "./MyPosts";
 import {ChangeEvent} from "react";
@@ -18,6 +18,10 @@ export const MyPostsContainer = () => {
         dispatch(changeInputText(''))
     }
 
+    const deletePostHandler = (id: string) => {
+        dispatch(deletePost(id))
+    }
+
     return (
         <div>
             <MyPosts
@@ -25,6 +29,7 @@ export const MyPostsContainer = () => {
                 textInput={textInput}
                 addPostHandler={addPostHandler}
                 setTextInput={setTextInput}
+                deletePostHandler={deletePostHandler}
             />
         </div>
     )

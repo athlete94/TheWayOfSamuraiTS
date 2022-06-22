@@ -10,6 +10,7 @@ const CHANGE_TEXT_INPUT = 'CHANGE_TEXT_INPUT'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_USER_STATUS = 'SET_USER_STATUS'
 const UPDATE_STATUS = 'UPDATE_STATUS'
+const DEL_POST = 'DEL_POST'
 
 export type PostsType = {
     id: string
@@ -49,6 +50,11 @@ export const profileReducer = (state: ProfileStateType = initialState, action: p
         case ADD_POST:
             let newPost = {id: v1(), text: action.payload.text}
             return {...state, posts: [newPost, ...state.posts]}
+        case DEL_POST:
+            return {
+                ...state,
+                posts: state.posts.filter(p => p.id !== action.payload.id )
+            }
         case CHANGE_TEXT_INPUT:
             return {...state, textInput: action.payload.text}
         case SET_USER_PROFILE:
@@ -74,6 +80,7 @@ export type profileReducerActionType = addPostACType
     | SetUserStatusType
     | UpdateStatusType
     | AppReducerActionType
+    | DeletePostType
 
 type addPostACType = ReturnType<typeof addPost>
 export const addPost = (text: string) => {
@@ -81,6 +88,16 @@ export const addPost = (text: string) => {
         type: ADD_POST,
         payload: {
             text
+        }
+    } as const
+}
+
+type DeletePostType = ReturnType<typeof deletePost>
+export const deletePost = (id: string) => {
+    return {
+        type: DEL_POST,
+        payload: {
+            id
         }
     } as const
 }
@@ -147,7 +164,7 @@ export const setUserStatusTC = (userId: number): AppThunk => dispatch => {
         })
 }
 
-export const UpdateStatusTC = (status: string): AppThunk => dispatch=> {
+export const UpdateStatusTC = (status: string): AppThunk => dispatch => {
     dispatch(setStatus('statusUpdating'))
     ProfileApi.updateStatus(status)
         .then(res => {
