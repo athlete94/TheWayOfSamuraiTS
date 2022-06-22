@@ -14,6 +14,7 @@ import {setIsAuthTC} from "./redux/authReducer";
 import {CircularProgress} from "@mui/material";
 import CustomizedSnackbars from "./components/Errors/Snackbar";
 import {useAppDispatch, useAppSelector} from "./redux/hooks";
+import {NotFound} from "./components/404/NotFound";
 
 
 
@@ -42,11 +43,13 @@ const App = () => {
                     <div className={s.app_wrapper_content}>
                         <Routes>
                             <Route path='/profile/:userId' element={<Profile/>}/>
+                            <Route path='/profile/' element={<Profile/>}/>
                             <Route path='/dialogs/*' element={<Dialogs/>}/>
                             <Route path='/friends/*' element={<Friends/>}/>
                             <Route path='/news/*' element={<News/>}/>
                             <Route path='/users/*' element={<Users/>}/>
                             <Route path='/login/*' element={<Login/>}/>
+                            <Route path='/*' element={<NotFound/>}/>
                         </Routes>
                         <CustomizedSnackbars />
                     </div>

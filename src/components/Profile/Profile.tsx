@@ -13,10 +13,15 @@ export const Profile = () => {
     let statusLoad = useAppSelector(state => state.AppReducer.status)
     let isLogin = useAppSelector(state => state.AuthReducer.isLogin)
     let {userProfile, status} = useAppSelector(state => state.profileReducer)
+    let id = useAppSelector(state => state.AuthReducer.userId)
     let dispatch = useAppDispatch()
 
     let {userId} = useParams()
 
+    if(!userId) {
+        userId = String(id)
+    }
+ debugger
     useEffect(() => {
         dispatch(setUserStatusTC(Number(userId)))
         dispatch(setUserProfileTC(Number(userId)))
