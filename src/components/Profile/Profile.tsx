@@ -21,7 +21,7 @@ export const Profile = () => {
     if(!userId) {
         userId = String(id)
     }
- debugger
+
     useEffect(() => {
         dispatch(setUserStatusTC(Number(userId)))
         dispatch(setUserProfileTC(Number(userId)))

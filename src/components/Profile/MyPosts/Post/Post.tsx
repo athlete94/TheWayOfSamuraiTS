@@ -12,6 +12,7 @@ const Post = (({id, text, deletePostHandler}: PostPropsType) => {
 
     let [show, setShow] = useState(false)
 
+
     const onMouseEnter = () => {
         setShow(true)
     }

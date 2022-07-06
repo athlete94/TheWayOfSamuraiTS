@@ -47,6 +47,13 @@ export const Login = () => {
 
     return (
         <div className={s.login_form}>
+            <p>To log in get registered here
+
+                or use common test account credentials:
+
+                Email: free@samuraijs.com
+
+                Password: free</p>
             <form onSubmit={formik.handleSubmit} onChange={() => dispatch(setError(''))}>
                 <div className={s.login_input}>
                     <input
