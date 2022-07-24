@@ -3,36 +3,26 @@ import Post from './Post/Post'
 import {ChangeEvent} from "react";
 import React from "react";
 import {PostsType} from "../../../redux/profileReducer";
+import {AddItemForm} from "../../AddItemForm/AddItemForm";
 
 type MyPostsPropsType = {
     posts: Array<PostsType>,
-    textInput: string,
-    addPostHandler: () => void,
-    setTextInput: (e: ChangeEvent<HTMLTextAreaElement>) => void
+    addPostHandler: (post: string) => void,
     deletePostHandler: (id: string) => void
 }
 
-const MyPosts = ({
-                     posts,
-                     textInput,
-                     addPostHandler,
-                     setTextInput,
-                     deletePostHandler
-                 }: MyPostsPropsType) => {
+const MyPosts = React.memo(({
+                                posts,
+                                addPostHandler,
+                                deletePostHandler
+                            }: MyPostsPropsType) => {
 
 
+    console.log('my posts')
     return <div className={s.myPosts}>
 
         <div className={s.addPost}>
-            <textarea className={s.postText}
-                      value={textInput}
-                      onChange={setTextInput}
-            />
-
-            <button className={s.btnAddPost}
-                    onClick={addPostHandler}
-            >Add
-            </button>
+            <AddItemForm placeholder={'new post'} callBack={(post: string) => addPostHandler(post)}/>
         </div>
 
         <h4>Posts</h4>
@@ -44,6 +34,6 @@ const MyPosts = ({
         />)}
     </div>
 
-}
+})
 
 export default MyPosts

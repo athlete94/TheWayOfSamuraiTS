@@ -6,7 +6,7 @@ type EditableSpanPropsType = {
     callback: (title: string) => void
 }
 
-export const EditableSpan = ({title, callback}: EditableSpanPropsType) => {
+export const EditableSpan = React.memo(({title, callback}: EditableSpanPropsType) => {
 
     const [edit, setEdit] = useState(true)
     const [titleList, setTitleList] = useState(title)
@@ -39,4 +39,4 @@ export const EditableSpan = ({title, callback}: EditableSpanPropsType) => {
                        onChange={onChangeHandler}/>}
         </div>
     );
-};
+});

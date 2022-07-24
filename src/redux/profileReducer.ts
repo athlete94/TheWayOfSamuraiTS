@@ -6,7 +6,6 @@ import {AxiosError} from "axios";
 import {AppThunk} from "./store";
 
 const ADD_POST = 'ADD_POST'
-const CHANGE_TEXT_INPUT = 'CHANGE_TEXT_INPUT'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_USER_STATUS = 'SET_USER_STATUS'
 const UPDATE_STATUS = 'UPDATE_STATUS'
@@ -21,7 +20,6 @@ export type ProfileStateType = typeof initialState
 
 let initialState = {
     posts: [] as Array<PostsType>,
-    textInput: '',
     userProfile: {
         userId: 0,
         lookingForAJob: true,
@@ -55,8 +53,6 @@ export const profileReducer = (state: ProfileStateType = initialState, action: p
                 ...state,
                 posts: state.posts.filter(p => p.id !== action.payload.id )
             }
-        case CHANGE_TEXT_INPUT:
-            return {...state, textInput: action.payload.text}
         case SET_USER_PROFILE:
             return {
                 ...state,
@@ -75,7 +71,6 @@ export const profileReducer = (state: ProfileStateType = initialState, action: p
 }
 
 export type profileReducerActionType = addPostACType
-    | changeInputTextActionType
     | SetUserProfileType
     | SetUserStatusType
     | UpdateStatusType
@@ -99,16 +94,6 @@ export const deletePost = (id: string) => {
         payload: {
             id
         }
-    } as const
-}
-
-type changeInputTextActionType = ReturnType<typeof changeInputText>
-export const changeInputText = (text: string) => {
-    return {
-        type: CHANGE_TEXT_INPUT,
-        payload: {
-            text,
-        },
     } as const
 }
 
@@ -173,7 +158,7 @@ export const UpdateStatusTC = (status: string): AppThunk => dispatch => {
             } else {
                 dispatch(setError(res.data.messages[0]))
             }
-            debugger
+
             dispatch(setStatus('idle'))
 
         })

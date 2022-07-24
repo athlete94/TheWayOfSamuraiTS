@@ -35,7 +35,6 @@ export const setFriendsTC = (currentPage: number, pageSize: number, friend: bool
     dispatch(setStatus('loading'))
     usersApi.getFriends(currentPage, pageSize, friend)
         .then(res => {
-            debugger
                 dispatch(setStatus("idle"))
                 dispatch(setFriends(res.data.items))
             }

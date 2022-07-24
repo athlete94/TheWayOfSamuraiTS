@@ -8,7 +8,7 @@ import {useAppSelector} from "../../redux/hooks";
 
 const Dialogs = () => {
 
-    const {dialogs, messages, messageText} = useAppSelector(state => state.dialogsReducer)
+    const {dialogs, messages} = useAppSelector(state => state.dialogsReducer)
     let isLogged = useAppSelector(state => state.AuthReducer.isLogin)
 
     if(!isLogged) {
@@ -20,7 +20,7 @@ const Dialogs = () => {
             {dialogs.map(d => <Dialog key={d.id} name={d.name} id={d.id}/>)}
         </div>
 
-        <MessagesContainer messages={messages} messageText={messageText}/>
+        <MessagesContainer messages={messages}/>
     </div>
 }
 

@@ -1,16 +1,16 @@
 import s from './UserInfo.module.css'
 import {GetUserProfileResponceType} from "../../../api/ProfileApi";
-import {setUserProfileTC, UpdateStatusTC} from "../../../redux/profileReducer";
+import {UpdateStatusTC} from "../../../redux/profileReducer";
 import {EditableSpan} from "../../EditableSpan/EditableSpan";
 import {Dots} from "../../Preloader/dots/dots";
-import React, {useEffect} from "react";
+import React, {useCallback} from "react";
 import {useAppDispatch, useAppSelector} from "../../../redux/hooks";
 
 type UserInfoType = {
     userProfile: GetUserProfileResponceType,
     status: string
 }
-const UserInfo = ({userProfile, status}: UserInfoType) => {
+const UserInfo = React.memo(({userProfile, status}: UserInfoType) => {
     const {
         userId,
         fullName,
@@ -25,10 +25,9 @@ const UserInfo = ({userProfile, status}: UserInfoType) => {
     let dispatch = useAppDispatch()
 
 
-    const updateStatus = (status: string) => {
+    const updateStatus = useCallback((status: string) => {
         dispatch(UpdateStatusTC(status))
-
-    }
+    }, [dispatch])
 
 
     return <div className={s.user_info}>
@@ -57,6 +56,6 @@ const UserInfo = ({userProfile, status}: UserInfoType) => {
             </div>
         </div>
     </div>
-}
+})
 
 export default UserInfo

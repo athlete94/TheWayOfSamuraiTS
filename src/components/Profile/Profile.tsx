@@ -23,8 +23,11 @@ export const Profile = () => {
     }
 
     useEffect(() => {
-        dispatch(setUserStatusTC(Number(userId)))
         dispatch(setUserProfileTC(Number(userId)))
+    }, [userId])
+
+    useEffect(() => {
+        dispatch(setUserStatusTC(Number(userId)))
     }, [userId, status])
 
 

@@ -1,12 +1,14 @@
 .dialogs {
-    display: grid;
-    grid-template-columns: 4fr 5fr;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
 }
 
 
 /* Dialogs */
 
 .dialogs_items {
+    width: 45%;
     margin: 5px;
 }
 
@@ -17,17 +19,3 @@
     margin: 5px;
 }
 
-.messages textarea {
-    margin: 25px 15px;
-    width: 94%;
-    outline: none;
-}
-
-.messages button {
-    border-radius: 10px;
-    padding: 5px;
-    background-color: #a3bcf3;
-    margin: 8px;
-    float: right;
-
-}

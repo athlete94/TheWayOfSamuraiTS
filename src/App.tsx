@@ -42,8 +42,8 @@ const App = () => {
                     <Navbar/>
                     <div className={s.app_wrapper_content}>
                         <Routes>
-                            <Route path='/:userId' element={<Profile/>}/>
                             <Route path='/' element={<Profile/>}/>
+                            <Route path='/:userId' element={<Profile/>}/>
                             <Route path='/dialogs/*' element={<Dialogs/>}/>
                             <Route path='/friends/*' element={<Friends/>}/>
                             <Route path='/news/*' element={<News/>}/>

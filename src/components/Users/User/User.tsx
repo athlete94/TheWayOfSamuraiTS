@@ -35,7 +35,7 @@ export const User = (props: UserPropsType) => {
     return (
         <div className={s.user}>
             <div className={s.img}>
-                <NavLink to={`/profile/${id}`}>
+                <NavLink to={`/${id}`}>
                     <img
                         src={photos.small ? photos.small : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrW-Jw-ZMy8KVpsK728K3CAEogswHduRgqog&usqp=CAU"}/>
                 </NavLink>

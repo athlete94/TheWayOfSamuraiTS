@@ -38,7 +38,7 @@ export const setError = (error: null | string) => {
 }
 
 export type SetStatusType = ReturnType<typeof setStatus>
-export const setStatus = (status: StatusType) => {
+export const    setStatus = (status: StatusType) => {
     return {
         type: 'SET_STATUS',
         status

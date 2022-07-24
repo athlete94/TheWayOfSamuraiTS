@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useCallback, useEffect} from "react";
 import s from './Friends.module.css'
 import {Navigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
@@ -20,12 +20,12 @@ const Friends = () => {
     }, [])
 
 
-    const followHandler = (id: number, followed: boolean) => {
+    const followHandler = useCallback((id: number, followed: boolean) => {
         followed ?
             dispatch(followUserTC(id, followed))
             :
             dispatch(deleteUserTC(id, followed))
-    }
+    }, [dispatch])
 
     if (!isLogin) {
         return <Navigate to={'/login'}/>

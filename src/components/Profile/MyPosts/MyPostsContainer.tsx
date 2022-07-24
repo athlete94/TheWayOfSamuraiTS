@@ -1,36 +1,33 @@
 import {
     addPost,
-    changeInputText, deletePost,
+    deletePost,
 } from "../../../redux/profileReducer";
 import MyPosts from "./MyPosts";
-import {ChangeEvent} from "react";
+import React, {ChangeEvent, useCallback} from "react";
 import {useAppDispatch, useAppSelector} from "../../../redux/hooks";
 
-export const MyPostsContainer = () => {
-    const {posts, textInput} = useAppSelector(state => state.profileReducer)
+export const MyPostsContainer = React.memo(() => {
+    console.log('my posts container')
+
+    const posts = useAppSelector(state => state.profileReducer.posts)
     const dispatch = useAppDispatch()
 
-    const setTextInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        dispatch(changeInputText(e.currentTarget.value.trimStart()))
-    }
-    const addPostHandler = () => {
-        textInput && dispatch(addPost(textInput))
-        dispatch(changeInputText(''))
-    }
 
-    const deletePostHandler = (id: string) => {
+    const addPostHandler = useCallback((post: string) => {
+         dispatch(addPost(post))
+    }, [dispatch])
+
+    const deletePostHandler = useCallback((id: string) => {
         dispatch(deletePost(id))
-    }
+    }, [dispatch])
 
     return (
         <div>
             <MyPosts
                 posts={posts}
-                textInput={textInput}
                 addPostHandler={addPostHandler}
-                setTextInput={setTextInput}
                 deletePostHandler={deletePostHandler}
             />
         </div>
     )
-}
+})

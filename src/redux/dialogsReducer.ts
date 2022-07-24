@@ -1,7 +1,6 @@
 import {v1} from "uuid";
 
 const ADD_MESSAGE = 'ADD_MESSAGE'
-const CHANGE_MESSAGE_TEXT = 'CHANGE_MESSAGE_TEXT'
 
 export type MessagesType = {
     id: string
@@ -27,7 +26,6 @@ const dialogsState= {
         {id: v1(), message: 'Really?'},
         {id: v1(), message: 'Really, didnt you believe?'},
     ]as Array<MessagesType>,
-    messageText: '',
 }
 
 export const dialogsReducer = (state: DialogsStateType = dialogsState, action: dialogsReducerActionType): DialogsStateType => {
@@ -38,14 +36,12 @@ export const dialogsReducer = (state: DialogsStateType = dialogsState, action: d
                 ...state,
                 messages: [ ...state.messages, newMessage]
             }
-        case CHANGE_MESSAGE_TEXT:
-            return {...state, messageText: action.payload.text}
         default:
             return state
     }
 }
 
-export  type dialogsReducerActionType = addMessageACType | changeMessageTextActionType
+export  type dialogsReducerActionType = addMessageACType
 
 type addMessageACType = ReturnType<typeof addMessage>
 export const addMessage = (text: string) => {
@@ -57,13 +53,4 @@ export const addMessage = (text: string) => {
     } as const
 }
 
-type changeMessageTextActionType = ReturnType<typeof changeMessageText>
-export const changeMessageText = (text: string) => {
-    return {
-        type: CHANGE_MESSAGE_TEXT,
-        payload: {
-            text,
-        }
-    }as const
-}
 
