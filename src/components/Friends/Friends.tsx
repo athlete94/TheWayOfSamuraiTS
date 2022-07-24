@@ -2,7 +2,7 @@ import React, {useCallback, useEffect} from "react";
 import s from './Friends.module.css'
 import {Navigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
-import {setFriendsTC} from "../../redux/friendsReducer";
+import {deleteFriendTC, setFriendsTC} from "../../redux/friendsReducer";
 import {Preloader} from "../Preloader/circle/Preloader";
 import {Friend} from "./Friend/Friend";
 import {deleteUserTC, followUserTC} from "../../redux/UsersReducer";
@@ -24,8 +24,8 @@ const Friends = () => {
         followed ?
             dispatch(followUserTC(id, followed))
             :
-            dispatch(deleteUserTC(id, followed))
-    }, [dispatch])
+            dispatch(deleteFriendTC(id))
+    }, [])
 
     if (!isLogin) {
         return <Navigate to={'/login'}/>

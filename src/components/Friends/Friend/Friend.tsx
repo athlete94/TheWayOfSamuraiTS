@@ -18,7 +18,6 @@ type UserPropsType = {
 }
 
 export const Friend = React.memo((props: UserPropsType) => {
-
     const {
         id,
         name,
@@ -38,7 +37,7 @@ export const Friend = React.memo((props: UserPropsType) => {
                         src={photos.small ? photos.small : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrW-Jw-ZMy8KVpsK728K3CAEogswHduRgqog&usqp=CAU"}/>
                 </NavLink>
                 {
-                    followed ?
+                    followed  ?
                         <button
                             onClick={() => followHandler(id, false)}
                             disabled={toggleFollowing.some(i => i === id)}>Unfollow</button> :
