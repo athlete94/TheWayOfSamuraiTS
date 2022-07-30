@@ -42,7 +42,7 @@ export const Login = () => {
 
 
     if (isLogin) {
-        return <Navigate to={`/profile/18495`}/>
+        return <Navigate to={`/`}/>
     }
 
     return (

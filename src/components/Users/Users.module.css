@@ -15,6 +15,13 @@
     animation: spin 1s linear infinite;
 }
 
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px ;
+}
+
 @keyframes spin {
     to {
         transform: rotate(360deg);

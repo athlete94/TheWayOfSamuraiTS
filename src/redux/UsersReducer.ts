@@ -9,6 +9,7 @@ const SET_USERS = 'SET_USERS'
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
 const SET_DISABLED = 'SET_DISABLED'
+const SET_PAGE_SIZE = 'SET_PAGE_SIZE'
 
 export type UsersType = {
     id: number,
@@ -30,8 +31,8 @@ export type UsersInitialStateType = {
 }
 export const usersInitialState: UsersInitialStateType = {
     users: [],
-    pageSize: 50,
-    totalUsersCount: 100,
+    pageSize: 10,
+    totalUsersCount: 0,
     currentPage: 1,
     toggleFollowing: []
 }
@@ -54,6 +55,11 @@ export const UsersReducer = (state: UsersInitialStateType = usersInitialState, a
             return {
                 ...state,
                 currentPage: action.payload.currentPage
+            }
+        case SET_PAGE_SIZE:
+            return {
+                ...state,
+                pageSize: action.payload.pageSize
             }
         case SET_TOTAL_USERS_COUNT:
             return {
@@ -80,6 +86,7 @@ export type UsersReducerActionType =
     SetTotalUsersCountType |
     SetDisabledType
     | AppReducerActionType
+    | SetPageSizeType
 
 type FollowActionType = ReturnType<typeof followUnfollow>
 export const followUnfollow = (id: number, followed: boolean) => {
@@ -112,6 +119,16 @@ export const setCurrentPage = (currentPage: number) => {
     } as const
 }
 
+type SetPageSizeType = ReturnType<typeof setPageSize>
+export const setPageSize = (pageSize: number) => {
+    return {
+        type: SET_PAGE_SIZE,
+        payload: {
+            pageSize
+        }
+    } as const
+}
+
 type SetTotalUsersCountType = ReturnType<typeof setTotalUsersCount>
 export const setTotalUsersCount = (totalUsersCount: number) => {
     return {
@@ -140,7 +157,7 @@ export const setUsersTC = (currentPage: number, pageSize: number): AppThunk => d
     usersApi.getUsers(currentPage, pageSize)
         .then(res => {
                 dispatch(setStatus("idle"))
-                //dispatch(setTotalUsersCount(response.data.totalCount))
+                dispatch(setTotalUsersCount(res.data.totalCount))
                 dispatch(setUsers(res.data.items))
             }
         )
