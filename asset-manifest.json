@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/TheWayOfSamuraiTS/static/css/main.f0e5a36e.css",
-    "main.js": "/TheWayOfSamuraiTS/static/js/main.6d07c490.js",
+    "main.css": "/TheWayOfSamuraiTS/static/css/main.24fa526d.css",
+    "main.js": "/TheWayOfSamuraiTS/static/js/main.d554c89a.js",
     "static/js/787.ad88b604.chunk.js": "/TheWayOfSamuraiTS/static/js/787.ad88b604.chunk.js",
     "index.html": "/TheWayOfSamuraiTS/index.html",
-    "main.f0e5a36e.css.map": "/TheWayOfSamuraiTS/static/css/main.f0e5a36e.css.map",
-    "main.6d07c490.js.map": "/TheWayOfSamuraiTS/static/js/main.6d07c490.js.map",
+    "main.24fa526d.css.map": "/TheWayOfSamuraiTS/static/css/main.24fa526d.css.map",
+    "main.d554c89a.js.map": "/TheWayOfSamuraiTS/static/js/main.d554c89a.js.map",
     "787.ad88b604.chunk.js.map": "/TheWayOfSamuraiTS/static/js/787.ad88b604.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f0e5a36e.css",
-    "static/js/main.6d07c490.js"
+    "static/css/main.24fa526d.css",
+    "static/js/main.d554c89a.js"
   ]
 }
