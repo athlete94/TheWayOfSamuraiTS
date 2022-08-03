@@ -12,7 +12,7 @@ type FormikErrorType = {
     rememberMe?: boolean
 }
 
-export const Login = () => {
+const Login = () => {
 
     let isLogin = useAppSelector(state => state.AuthReducer.isLogin)
     const dispatch = useAppDispatch()
@@ -86,3 +86,4 @@ export const Login = () => {
     );
 };
 
+export default Login

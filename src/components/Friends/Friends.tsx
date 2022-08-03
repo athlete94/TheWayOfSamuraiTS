@@ -47,7 +47,7 @@ const Friends = () => {
             )
         })}
 
-            </div>
-        }
+    </div>
+}
 
-            export default Friends
+export default Friends

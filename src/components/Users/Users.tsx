@@ -11,7 +11,7 @@ import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import BasicPagination from "../Pagination/BasicPagination";
 import SelectAutoWidth from "../PageCount/PageCount";
 
-export const Users = () => {
+const Users = () => {
 
     const {
         users,
@@ -69,4 +69,4 @@ export const Users = () => {
     );
 };
 
-
+export default Users
