@@ -10,6 +10,7 @@ const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_USER_STATUS = 'SET_USER_STATUS'
 const UPDATE_STATUS = 'UPDATE_STATUS'
 const DEL_POST = 'DEL_POST'
+const UPDATE_PHOTO = 'UPDATE_PHOTO'
 
 export type PostsType = {
     id: string
@@ -51,7 +52,7 @@ export const profileReducer = (state: ProfileStateType = initialState, action: p
         case DEL_POST:
             return {
                 ...state,
-                posts: state.posts.filter(p => p.id !== action.payload.id )
+                posts: state.posts.filter(p => p.id !== action.payload.id)
             }
         case SET_USER_PROFILE:
             return {
@@ -64,10 +65,14 @@ export const profileReducer = (state: ProfileStateType = initialState, action: p
                 ...state,
                 status: action.payload.status
             }
+        case UPDATE_PHOTO:
+            return {
+                ...state,
+                userProfile: {...state.userProfile, photos: action.payload.photos}
+            }
         default:
             return state
     }
-
 }
 
 export type profileReducerActionType = addPostACType
@@ -76,6 +81,7 @@ export type profileReducerActionType = addPostACType
     | UpdateStatusType
     | AppReducerActionType
     | DeletePostType
+    | UpdatePhotoType
 
 type addPostACType = ReturnType<typeof addPost>
 export const addPost = (text: string) => {
@@ -128,6 +134,16 @@ export const updateStatus = (status: string) => {
     } as const
 }
 
+type UpdatePhotoType = ReturnType<typeof updatePhoto>
+export const updatePhoto = (photos: { small: string, large: string }) => {
+    return {
+        type: 'UPDATE_PHOTO',
+        payload: {
+            photos,
+        }
+    } as const
+}
+
 //thunk creators
 
 export const setUserProfileTC = (userId: number): AppThunk => dispatch => {
@@ -161,6 +177,18 @@ export const UpdateStatusTC = (status: string): AppThunk => dispatch => {
 
             dispatch(setStatus('idle'))
 
+        })
+        .catch((err: AxiosError) => {
+            dispatch(setError(err.message))
+            dispatch(setStatus('idle'))
+        })
+}
+
+const UpdatePhotoTC = (image: string): AppThunk => dispatch => {
+    dispatch(setStatus('loading'))
+    ProfileApi.updatePhoto(image)
+        .then(res => {
+            dispatch(updatePhoto(res.data.data))
         })
         .catch((err: AxiosError) => {
             dispatch(setError(err.message))
