@@ -20,14 +20,17 @@ export const ProfileApi = {
     },
     updateStatus(status: string) {
         return instance.put<ResponceType>('profile/status', {status})
+    },
+    updatePhoto(image: string) {
+        return instance.put<ResponceType<{small: string, large: string}>>('profile/photo', {image })
     }
 }
 
 
-export type ResponceType = {
+export type ResponceType<T = {}> = {
     resultCode: number,
     messages: string[],
-    data: {}
+    data: T
 }
 
 export type GetUserProfileResponceType = {
