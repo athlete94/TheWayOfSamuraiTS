@@ -1,4 +1,5 @@
 import axios from "axios";
+import {UpdateProfileDataType} from "../redux/profileReducer";
 
 
 let instance = axios.create({
@@ -21,8 +22,15 @@ export const ProfileApi = {
     updateStatus(status: string) {
         return instance.put<ResponceType>('profile/status', {status})
     },
-    updatePhoto(image: string) {
-        return instance.put<ResponceType<{small: string, large: string}>>('profile/photo', {image })
+    updatePhoto(image: File) {
+        const formData = new FormData();
+        formData.append("image", image);
+        return instance.put<ResponceType<{ small: string, large: string }>>('profile/photo', formData, {
+            headers: {'Content-Type': 'multipart/form-data'}
+        })
+    },
+    updateProfile(data: UpdateProfileDataType) {
+        return instance.put('profile', data)
     }
 }
 
