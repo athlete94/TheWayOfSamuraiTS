@@ -16,6 +16,7 @@ const Users = React.lazy(() => import('./components/Users/Users'))
 const Login = React.lazy(() => import('./components/Login/Login'))
 const News = React.lazy(() => import('./components/News/News'))
 const Friends = React.lazy(() => import('./components/Friends/Friends'))
+const UpdateProfile = React.lazy(() => import('./components/UpdateProfile/UpdateProfile'))
 
 
 const App = () => {
@@ -50,6 +51,7 @@ const App = () => {
                                 <Route path='/users/*' element={<Users/>}/>
                                 <Route path='/login/*' element={<Login/>}/>
                                 <Route path='/*' element={<NotFound/>}/>
+                                <Route path='/updateProfile' element={<UpdateProfile/>}/>
                             </Routes>
                         </React.Suspense>
                         <CustomizedSnackbars />

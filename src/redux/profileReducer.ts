@@ -200,30 +200,13 @@ export const UpdatePhotoTC = (image: File): AppThunk => async dispatch => {
     }
 }
 
-export const UpdateProfileTC = (): AppThunk => async (dispatch,
-                                                      getState) => {
-    let {
-        userId,
-        lookingForAJob,
-        lookingForAJobDescription,
-        fullName,
-        ...contacts
-    } = getState().profileReducer.userProfile
-
-
-    let profileData = {
-        userId,
-        lookingForAJob,
-        lookingForAJobDescription,
-        fullName,
-        contacts
-    }
+export const UpdateProfileTC = (data: any): AppThunk => async dispatch => {
 
     try {
         dispatch(setStatus('loading'))
-        let responce = await ProfileApi.updateProfile(profileData)
+        let responce = await ProfileApi.updateProfile(data)
         if (responce.data.resultCode === 0) {
-            // dispatch(setUserProfileTC(userId))
+            dispatch(setUserProfile(data))
             dispatch(setStatus('idle'))
         }
 

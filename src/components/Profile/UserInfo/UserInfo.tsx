@@ -6,6 +6,7 @@ import {Dots} from "../../Preloader/dots/dots";
 import React, {useCallback} from "react";
 import {useAppDispatch, useAppSelector} from "../../../redux/hooks";
 import {InputTypeFile} from "../../InputTypeFile/InputTypeFile";
+import {NavLink} from "react-router-dom";
 
 type UserInfoType = {
     userProfile: GetUserProfileResponceType,
@@ -16,9 +17,11 @@ const UserInfo = React.memo(({userProfile, status}: UserInfoType) => {
         userId,
         fullName,
         lookingForAJobDescription,
-        github,
-        vk,
-        instagram,
+        contacts: {
+            vk,
+            instagram,
+            github
+        },
         photos
     } = userProfile
 
@@ -55,6 +58,12 @@ const UserInfo = React.memo(({userProfile, status}: UserInfoType) => {
                     <div>{instagram}</div>
                 </div>
                 }
+            </div>
+
+            <div>
+                <NavLink to='/UpdateProfile'>
+                    change profile
+                </NavLink>
             </div>
         </div>
     </div>
