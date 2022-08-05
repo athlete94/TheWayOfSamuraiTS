@@ -2,7 +2,7 @@ import s from "./Profile.module.css"
 import UserInfo from "./UserInfo/UserInfo"
 import React, {useEffect} from "react";
 import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
-import {setUserProfileTC, setUserStatusTC} from "../../redux/profileReducer";
+import {setUserProfileTC, setUserStatusTC, updatePhoto, UpdatePhotoTC} from "../../redux/profileReducer";
 import {Navigate, useParams} from "react-router-dom";
 import {Preloader} from "../Preloader/circle/Preloader";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
@@ -24,7 +24,7 @@ export const Profile = () => {
 
     useEffect(() => {
         dispatch(setUserProfileTC(Number(userId)))
-    }, [userId])
+    }, [userId, userProfile.photos.large])
 
     useEffect(() => {
         dispatch(setUserStatusTC(Number(userId)))
@@ -36,13 +36,8 @@ export const Profile = () => {
     }
 
     return <div className={s.profile}>
-        <div className={s.content_image}>
-            <img src='https://static.dw.com/image/44124169_403.jpg' alt=""/>
-        </div>
-
         {statusLoad === 'loading' ? <Preloader/> :
             <div>
-
                 <UserInfo userProfile={userProfile} status={status}/>
                 <MyPostsContainer/>
             </div>

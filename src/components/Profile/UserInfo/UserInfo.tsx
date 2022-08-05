@@ -1,10 +1,11 @@
 import s from './UserInfo.module.css'
 import {GetUserProfileResponceType} from "../../../api/ProfileApi";
-import {UpdateStatusTC} from "../../../redux/profileReducer";
+import {UpdatePhotoTC, UpdateStatusTC} from "../../../redux/profileReducer";
 import {EditableSpan} from "../../EditableSpan/EditableSpan";
 import {Dots} from "../../Preloader/dots/dots";
 import React, {useCallback} from "react";
 import {useAppDispatch, useAppSelector} from "../../../redux/hooks";
+import {InputTypeFile} from "../../InputTypeFile/InputTypeFile";
 
 type UserInfoType = {
     userProfile: GetUserProfileResponceType,
@@ -29,12 +30,13 @@ const UserInfo = React.memo(({userProfile, status}: UserInfoType) => {
         dispatch(UpdateStatusTC(status))
     }, [dispatch])
 
+    const setUserAva = (ava: File) => {
+        dispatch(UpdatePhotoTC(ava))
+    }
 
     return <div className={s.user_info}>
         <div className={s.avatar}>
-            <img
-                src={photos.small ? photos.small : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrW-Jw-ZMy8KVpsK728K3CAEogswHduRgqog&usqp=CAU"}
-                alt=""/>
+            <InputTypeFile userId={userId} setUserAva={setUserAva} userAva={photos.large}/>
         </div>
 
         <div className={s.description}>

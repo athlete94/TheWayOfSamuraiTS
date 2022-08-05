@@ -66,6 +66,7 @@ export const profileReducer = (state: ProfileStateType = initialState, action: p
                 status: action.payload.status
             }
         case UPDATE_PHOTO:
+            debugger
             return {
                 ...state,
                 userProfile: {...state.userProfile, photos: action.payload.photos}
@@ -184,16 +185,19 @@ export const UpdateStatusTC = (status: string): AppThunk => dispatch => {
         })
 }
 
-const UpdatePhotoTC = (image: string): AppThunk => dispatch => {
-    dispatch(setStatus('loading'))
-    ProfileApi.updatePhoto(image)
-        .then(res => {
-            dispatch(updatePhoto(res.data.data))
-        })
-        .catch((err: AxiosError) => {
-            dispatch(setError(err.message))
+export const UpdatePhotoTC = (image: File): AppThunk => async dispatch => {
+    try {
+        dispatch(setStatus('loading'))
+        let responce = await ProfileApi.updatePhoto(image)
+        if (responce.data.resultCode === 0) {
+            dispatch(updatePhoto(responce.data.data))
             dispatch(setStatus('idle'))
-        })
+        }
+
+    } catch (err: any) {
+        dispatch(setError(err.message))
+        dispatch(setStatus('idle'))
+    }
 }
 
 
