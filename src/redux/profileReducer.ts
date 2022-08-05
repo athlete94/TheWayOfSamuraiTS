@@ -4,7 +4,6 @@ import {GetUserProfileResponceType} from '../api/ProfileApi'
 import {AppReducerActionType, setError, setStatus} from "./appReducer";
 import {AxiosError} from "axios";
 import {AppThunk} from "./store";
-
 const ADD_POST = 'ADD_POST'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_USER_STATUS = 'SET_USER_STATUS'
@@ -26,15 +25,16 @@ let initialState = {
         lookingForAJob: true,
         lookingForAJobDescription: '',
         fullName: '',
-        contacts: {},
-        github: '',
-        vk: '',
-        facebook: '',
-        instagram: '',
-        twitter: '',
-        website: '',
-        youtube: '',
-        mainLink: '',
+        contacts: {
+            github: '',
+            vk: '',
+            facebook: '',
+            instagram: '',
+            twitter: '',
+            website: '',
+            youtube: '',
+            mainLink: '',
+        },
         photos: {
             small: '',
             large: ''
@@ -200,4 +200,54 @@ export const UpdatePhotoTC = (image: File): AppThunk => async dispatch => {
     }
 }
 
+export const UpdateProfileTC = (): AppThunk => async (dispatch,
+                                                      getState) => {
+    let {
+        userId,
+        lookingForAJob,
+        lookingForAJobDescription,
+        fullName,
+        ...contacts
+    } = getState().profileReducer.userProfile
 
+
+    let profileData = {
+        userId,
+        lookingForAJob,
+        lookingForAJobDescription,
+        fullName,
+        contacts
+    }
+
+    try {
+        dispatch(setStatus('loading'))
+        let responce = await ProfileApi.updateProfile(profileData)
+        if (responce.data.resultCode === 0) {
+            // dispatch(setUserProfileTC(userId))
+            dispatch(setStatus('idle'))
+        }
+
+    } catch (err: any) {
+        dispatch(setError(err.message))
+        dispatch(setStatus('idle'))
+    }
+}
+
+
+
+export type UpdateProfileDataType = {
+    userId: number
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    contacts: {
+        github: string
+        vk: string
+        facebook: string
+        instagram: string
+        twitter: string
+        website: string
+        youtube: string
+        mainLink: string
+    }
+}
