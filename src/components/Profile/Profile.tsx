@@ -38,7 +38,7 @@ export const Profile = () => {
     return <div className={s.profile}>
         {statusLoad === 'loading' ? <Preloader/> :
             <div>
-                <UserInfo userProfile={userProfile} status={status}/>
+                <UserInfo id={id} userProfile={userProfile} status={status}/>
                 <MyPostsContainer/>
             </div>
         }

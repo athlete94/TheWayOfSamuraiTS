@@ -1,32 +1,36 @@
- 
-  .user_info {
+
+.user_info {
     display: flex;
-    justify-content: space-between;
+    gap: 12%;
     margin-bottom: 50px;
-  }
-  
-  .avatar {
+}
+
+.avatar {
     width: 150px;
     height: 150px;
-  margin-bottom: 20px;
-  }
-  
-  .avatar img {
+    margin-bottom: 20px;
+}
+
+.avatar img {
     width: 150px;
-  }
+}
 
-  .fullName {
+.fullName {
     font-size: 18px;
-  }
+}
 
-  .status {
+.status {
     font-weight: lighter;
     display: flex;
     justify-content: space-between;
     width: 300px;
-  }
+}
 
-  .description {
+.description {
     width: 600px;
-    padding-right: 50px;
-  }
+    display: flex;
+}
+
+.description_content {
+    width: 600px;
+}

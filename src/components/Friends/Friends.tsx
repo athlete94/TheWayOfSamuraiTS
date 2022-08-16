@@ -5,7 +5,9 @@ import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import {deleteFriendTC, setFriendsTC} from "../../redux/friendsReducer";
 import {Preloader} from "../Preloader/circle/Preloader";
 import {Friend} from "./Friend/Friend";
-import {deleteUserTC, followUserTC} from "../../redux/UsersReducer";
+import {deleteUserTC, followUserTC, setCurrentPage} from "../../redux/UsersReducer";
+import {Pagination} from "@mui/material";
+import BasicPagination from "../Pagination/BasicPagination";
 
 const Friends = () => {
     let isLogin = useAppSelector(state => state.AuthReducer.isLogin)
@@ -26,12 +28,18 @@ const Friends = () => {
             :
             dispatch(deleteFriendTC(id))
     }, [])
+    const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+        dispatch(setCurrentPage(value))
+    };
+
+    let pagesCount = Math.ceil(totalUsersCount / pageSize)
 
     if (!isLogin) {
         return <Navigate to={'/login'}/>
     }
     return <div className={s.friends}>
         {statusLoad === 'loading' && <Preloader/> /*loading*/}
+        <BasicPagination handleChange={handleChange} pagesCount={}/>
 
         {friends.map(f => {
             return (

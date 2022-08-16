@@ -43,6 +43,7 @@ export type ResponceType<T = {}> = {
 
 export type GetUserProfileResponceType = {
     userId: number
+    aboutMe: string,
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string

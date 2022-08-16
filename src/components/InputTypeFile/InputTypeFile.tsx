@@ -13,10 +13,8 @@ type InputTypeFilePropsType = {
 export const InputTypeFile = React.memo(({userAva, setUserAva, userId}: InputTypeFilePropsType) => {
     const [isAvaBroken, setIsAvaBroken] = useState(false)
     const id = useAppSelector(state => state.AuthReducer.userId)
-    // const large = useAppSelector(state => state.profileReducer.userProfile.photos.large)
 
 
-    debugger
     const uploadHandler = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length) {
             const file = e.target.files[0]
@@ -28,15 +26,15 @@ export const InputTypeFile = React.memo(({userAva, setUserAva, userId}: InputTyp
         }
     }
 
-    const convertFileToBase64 = (file: File, callBack: (value: string) => void) => {
-        const reader = new FileReader();
-
-        reader.onloadend = () => {
-            const file64 = reader.result as string
-            callBack(file64)
-        }
-        reader.readAsDataURL(file)
-    }
+    // const convertFileToBase64 = (file: File, callBack: (value: string) => void) => {
+    //     const reader = new FileReader();
+    //
+    //     reader.onloadend = () => {
+    //         const file64 = reader.result as string
+    //         callBack(file64)
+    //     }
+    //     reader.readAsDataURL(file)
+    // }
 
     const errorHandler = () => {
         setIsAvaBroken(true)
@@ -45,10 +43,9 @@ export const InputTypeFile = React.memo(({userAva, setUserAva, userId}: InputTyp
 
     return (
         <label>
-            <img src={userAva ? userAva : 'https://klike.net/uploads/posts/2019-03/1551511809_6.jpg'}
+            <img src={userAva || !isAvaBroken ? userAva : 'https://klike.net/uploads/posts/2019-03/1551511809_6.jpg'}
                  onError={errorHandler}
                  alt=""/>
-
 
             <input type="file"
                    onChange={uploadHandler}
@@ -57,7 +54,7 @@ export const InputTypeFile = React.memo(({userAva, setUserAva, userId}: InputTyp
             />
 
             {userId === id && // показывай кнопку только если свой профайл
-            <div style={{width: '40px'}}>
+            <div style={{display: 'flex', justifyContent:'center', alignItems: 'center'}}>
                 <IconButton component="span">
                     <DriveFolderUploadIcon/>
                 </IconButton>

@@ -4,12 +4,14 @@ import {GetUserProfileResponceType} from '../api/ProfileApi'
 import {AppReducerActionType, setError, setStatus} from "./appReducer";
 import {AxiosError} from "axios";
 import {AppThunk} from "./store";
+
 const ADD_POST = 'ADD_POST'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_USER_STATUS = 'SET_USER_STATUS'
 const UPDATE_STATUS = 'UPDATE_STATUS'
 const DEL_POST = 'DEL_POST'
 const UPDATE_PHOTO = 'UPDATE_PHOTO'
+const UPDATE_PROFILE = 'UPDATE_PROFILE'
 
 export type PostsType = {
     id: string
@@ -66,10 +68,15 @@ export const profileReducer = (state: ProfileStateType = initialState, action: p
                 status: action.payload.status
             }
         case UPDATE_PHOTO:
-            debugger
+
             return {
                 ...state,
                 userProfile: {...state.userProfile, photos: action.payload.photos}
+            }
+        case UPDATE_PROFILE:
+            return {
+                ...state,
+                userProfile: {...state.userProfile, ...action.payload.data}
             }
         default:
             return state
@@ -83,6 +90,7 @@ export type profileReducerActionType = addPostACType
     | AppReducerActionType
     | DeletePostType
     | UpdatePhotoType
+    | UpdateProfileType
 
 type addPostACType = ReturnType<typeof addPost>
 export const addPost = (text: string) => {
@@ -145,6 +153,16 @@ export const updatePhoto = (photos: { small: string, large: string }) => {
     } as const
 }
 
+type UpdateProfileType = ReturnType<typeof updateProfile>
+export const updateProfile = (data: UpdateProfileDataType) => {
+    return {
+        type: 'UPDATE_PROFILE',
+        payload: {
+            data,
+        }
+    } as const
+}
+
 //thunk creators
 
 export const setUserProfileTC = (userId: number): AppThunk => dispatch => {
@@ -200,26 +218,45 @@ export const UpdatePhotoTC = (image: File): AppThunk => async dispatch => {
     }
 }
 
-export const UpdateProfileTC = (data: any): AppThunk => async dispatch => {
+export const UpdateProfileTC = (data: any): AppThunk => (dispatch, getState) => {
+    dispatch(setStatus('loading'))
 
-    try {
-        dispatch(setStatus('loading'))
-        let responce = await ProfileApi.updateProfile(data)
-        if (responce.data.resultCode === 0) {
-            dispatch(setUserProfile(data))
-            dispatch(setStatus('idle'))
+    let profileUpdateRequestData: UpdateProfileDataType = {
+        userId: getState().AuthReducer.userId,
+        aboutMe: data.values.aboutMe,
+        lookingForAJob: data.values.lookingForAJob === 'Yes',
+        lookingForAJobDescription: data.values.lookingForAJobDescription,
+        fullName: data.values.fullName,
+        contacts: {
+            github: data.values.github,
+            vk: data.values.vk,
+            facebook: data.values.facebook,
+            instagram: data.values.instagram,
+            twitter: data.values.twitter,
+            website: data.values.website,
+            youtube: data.values.youtube,
+            mainLink: data.values.mainLink,
         }
-
-    } catch (err: any) {
-        dispatch(setError(err.message))
-        dispatch(setStatus('idle'))
     }
-}
 
+    ProfileApi.updateProfile(profileUpdateRequestData)
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(updateProfile(profileUpdateRequestData))
+                dispatch(setStatus('idle'))
+            }
+        })
+        .catch((err: any) => {
+            dispatch(setError(err.message))
+            dispatch(setStatus('idle'))
+        })
+
+}
 
 
 export type UpdateProfileDataType = {
     userId: number
+    aboutMe: string
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string

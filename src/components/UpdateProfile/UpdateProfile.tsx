@@ -2,46 +2,47 @@ import React from 'react';
 import s from './UpdateProfile.module.css'
 import {useFormik} from "formik";
 import {UpdateProfileTC} from "../../redux/profileReducer";
-import {useAppDispatch} from "../../redux/hooks";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 
 type FormikErrorType = {
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string
-    contacts: {
-        github: string
-        vk: string
-        facebook: string
-        instagram: string
-        twitter: string
-        website: string
-        youtube: string
-        mainLink: string
-    }
+    github: string
+    vk: string
+    facebook: string
+    instagram: string
+    twitter: string
+    website: string
+    youtube: string
+    mainLink: string
+
 }
 
-const UpdateProfile = () => {
 
+
+const UpdateProfile = () => {
+    const {aboutMe, fullName, lookingForAJobDescription } = useAppSelector(state => state.profileReducer.userProfile)
+    const {website, github} = useAppSelector(state => state.profileReducer.userProfile.contacts)
     const dispatch = useAppDispatch()
 
     let formik = useFormik({
         initialValues: {
-            fullName: '',
-            lookingForAJob: false,
-            lookingForAJobDescription: '',
-            contacts: {
-                github: '',
-                vk: '',
-                facebook: '',
-                instagram: '',
-                twitter: '',
-                website: '',
-                youtube: '',
-                mainLink: '',
-            }
+            aboutMe: aboutMe,
+            fullName: fullName,
+            lookingForAJob: '',
+            lookingForAJobDescription: lookingForAJobDescription,
+            github: github,
+            vk: '',
+            facebook: '',
+            instagram: '',
+            twitter: '',
+            website: website,
+            youtube: '',
+            mainLink: '',
         },
         onSubmit: values => {
-            dispatch(UpdateProfileTC({values, lookingForAJob: !!'Yes'}))
+            dispatch(UpdateProfileTC({values}))
             formik.resetForm()
         },
         // validate: (values) => {
@@ -57,7 +58,15 @@ const UpdateProfile = () => {
     })
 
     return (
-        <div className={s.updateProfile}>
+        <form onSubmit={formik.handleSubmit} className={s.updateProfile}>
+            <div className={s.updateProfileItem}>
+                <span>About me: </span>
+                <input
+                    type="text"
+                    placeholder='aboutMe'
+                    {...formik.getFieldProps('aboutMe')}
+                />
+            </div>
             <div className={s.updateProfileItem}>
                 <span>Full name: </span>
                 <input
@@ -67,91 +76,87 @@ const UpdateProfile = () => {
                 />
             </div>
 
-            <div>
+            <div className={s.updateProfileItem}>
                 <span>Looking for a job? </span>
-                Yes <input
-                type="radio"
-                placeholder='lookingForAJob'
-                value='Yes'
-                name='lookingForAJob'
-                onChange={formik.handleChange}
-            />
-                No
-                <input
-                    type="radio"
-                    placeholder='lookingForAJob'
-                    value='No'
-                    name='lookingForAJob'
-                    onChange={formik.handleChange}
-                />
-
+                <label>
+                    <input type="radio"
+                           name="lookingForAJob"
+                           value="Yes"
+                    onChange={formik.handleChange}/>
+                    Yes
+                </label>
+                <label>
+                    <input type="radio"
+                           name="lookingForAJob"
+                           value="No"
+                           onChange={formik.handleChange}/>
+                    No
+                </label>
             </div>
             <div className={s.updateProfileItem}>
                 <span>Your job: </span>
-                <span>
+
                     <input
                         type="text"
                         placeholder='lookingForAJobDescription'
                         {...formik.getFieldProps('lookingForAJobDescription')}
-                    /></span>
+                    />
             </div>
 
             <div>
 
 
                 <p>Contacts: </p>
-                <p className={s.contact}><span>github</span> <span>
+                <p className={s.contact}><span>github</span>
                     <input
                         type="text"
                         placeholder='github'
-                        {...formik.getFieldProps('github')}/> </span></p>
+                        {...formik.getFieldProps('github')}/></p>
 
-                <p className={s.contact}><span>vk</span> <span>
+                <p className={s.contact}><span>vk</span>
                     <input
                         type="text"
                         placeholder='vk'
                         {...formik.getFieldProps('vk')}/>
-                </span></p>
-                <p className={s.contact}><span>facebook</span> <span>
+                </p>
+                <p className={s.contact}><span>facebook</span>
                     <input
                         type="text"
                         placeholder='facebook'
                         {...formik.getFieldProps('facebook')}/>
-                </span></p>
+                </p>
                 <p className={s.contact}><span>instagram</span>
-                    <span>
                     <input
                         type="text"
                         placeholder='instagram'
-                        {...formik.getFieldProps('instagram')}/></span></p>
+                        {...formik.getFieldProps('instagram')}/></p>
                 <p className={s.contact}><span>twitter</span>
-                    <span>
+
                     <input
                         type="text"
                         placeholder='twitter'
-                        {...formik.getFieldProps('twitter')}/></span></p>
+                        {...formik.getFieldProps('twitter')}/></p>
                 <p className={s.contact}><span>website</span>
-                    <span>
+
                     <input
                         type="text"
                         placeholder='website'
-                        {...formik.getFieldProps('website')}/></span></p>
+                        {...formik.getFieldProps('website')}/></p>
                 <p className={s.contact}><span>youtube</span>
-                    <span>
+
                     <input
                         type="text"
                         placeholder='youtube'
-                        {...formik.getFieldProps('youtube')}/></span></p>
+                        {...formik.getFieldProps('youtube')}/></p>
                 <p className={s.contact}><span>mainLink</span>
-                    <span>
                     <input
                         type="text"
                         placeholder='mainLink'
-                        {...formik.getFieldProps('mainLink')}/></span></p>
+                        {...formik.getFieldProps('mainLink')}/></p>
             </div>
 
             <button type={'submit'}>Save</button>
-        </div>
+        </form>
     );
 };
 
