@@ -6,7 +6,7 @@ import {deleteFriendTC, setFriendsTC} from "../../redux/friendsReducer";
 import {Preloader} from "../Preloader/circle/Preloader";
 import {Friend} from "./Friend/Friend";
 import {deleteUserTC, followUserTC, setCurrentPage} from "../../redux/UsersReducer";
-import {Pagination} from "@mui/material";
+import style from '../Users/Users.module.css'
 import BasicPagination from "../Pagination/BasicPagination";
 
 const Friends = () => {
@@ -14,12 +14,17 @@ const Friends = () => {
     let friends = useAppSelector(state => state.friendsReducer.friends)
     let statusLoad = useAppSelector(state => state.AppReducer.status)
     let toggleFollowing = useAppSelector(state => state.UsersReducer.toggleFollowing)
+    const {
+        pageSize,
+        currentPage,
+    } = useAppSelector(state => state.UsersReducer)
+    const totalCount = useAppSelector(state => state.friendsReducer.totalCount)
 
     let dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(setFriendsTC(1, 100, true))
-    }, [])
+        dispatch(setFriendsTC(currentPage, pageSize, true))
+    }, [currentPage])
 
 
     const followHandler = useCallback((id: number, followed: boolean) => {
@@ -32,15 +37,17 @@ const Friends = () => {
         dispatch(setCurrentPage(value))
     };
 
-    let pagesCount = Math.ceil(totalUsersCount / pageSize)
+    let pagesCount = Math.ceil(totalCount / pageSize)
 
     if (!isLogin) {
         return <Navigate to={'/login'}/>
     }
     return <div className={s.friends}>
         {statusLoad === 'loading' && <Preloader/> /*loading*/}
-        <BasicPagination handleChange={handleChange} pagesCount={}/>
 
+        <div className={style.pagination}>
+            <BasicPagination handleChange={handleChange} pagesCount={pagesCount}/>
+        </div>
         {friends.map(f => {
             return (
                 <Friend

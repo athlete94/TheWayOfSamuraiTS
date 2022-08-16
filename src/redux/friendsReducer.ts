@@ -7,16 +7,24 @@ import {AppThunk} from "./store";
 export type InitialStateType = typeof friendsInitialState
 export const friendsInitialState = {
     friends: [] as UsersType[],
+    totalCount: 0,
+    error: ''
 }
 
 
-export const friendsReducer = (state:InitialStateType = friendsInitialState, action: FriendsReducerActonType): InitialStateType => {
+export const friendsReducer = (state: InitialStateType = friendsInitialState, action: FriendsReducerActonType): InitialStateType => {
     switch (action.type) {
         case 'SET_FRIENDS':
             return {
                 ...state,
-                friends: action.friends
+                friends: action.friends,
             }
+        case 'SET_TOTAL_COUNT':
+            return {
+                ...state,
+                totalCount: action.count,
+            }
+
         case 'DELETE_FRIEND':
             return {
                 ...state,
@@ -27,29 +35,38 @@ export const friendsReducer = (state:InitialStateType = friendsInitialState, act
     }
 }
 
-export type FriendsReducerActonType = SetFriendsType | DeleteFriendType
+export type FriendsReducerActonType = SetFriendsType | DeleteFriendType | SetTotalCountType
 type SetFriendsType = ReturnType<typeof setFriends>
 export const setFriends = (friends: UsersType[]) => {
     return {
         type: 'SET_FRIENDS',
         friends
-    }as const
+    } as const
 }
 type DeleteFriendType = ReturnType<typeof deleteFriend>
 export const deleteFriend = (id: number) => {
     return {
         type: 'DELETE_FRIEND',
         id
-    }as const
+    } as const
+}
+
+type SetTotalCountType = ReturnType<typeof setTotalCount>
+export const setTotalCount = (count: number) => {
+    return {
+        type: 'SET_TOTAL_COUNT',
+        count
+    } as const
 }
 
 export const setFriendsTC = (currentPage: number, pageSize: number, friend: boolean): AppThunk => dispatch => {
     dispatch(setStatus('loading'))
     usersApi.getFriends(currentPage, pageSize, friend)
         .then(res => {
-            debugger
+                debugger
                 dispatch(setStatus("idle"))
                 dispatch(setFriends(res.data.items))
+                dispatch(setTotalCount(res.data.totalCount))
             }
         )
         .catch((err: AxiosError) => {
