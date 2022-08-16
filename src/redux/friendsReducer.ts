@@ -1,4 +1,4 @@
-import {followUnfollow, setDisabled, setUsers, UsersType} from "./UsersReducer";
+import {followUnfollow, SET_CURRENT_PAGE, SetCurrentPageType, setDisabled, setUsers, UsersType} from "./UsersReducer";
 import {setError, setStatus} from "./appReducer";
 import {usersApi} from "../api/UsersApi";
 import {AxiosError} from "axios";
@@ -7,6 +7,8 @@ import {AppThunk} from "./store";
 export type InitialStateType = typeof friendsInitialState
 export const friendsInitialState = {
     friends: [] as UsersType[],
+    currentPage: 1,
+    pageSize: 5,
     totalCount: 0,
     error: ''
 }
@@ -24,6 +26,11 @@ export const friendsReducer = (state: InitialStateType = friendsInitialState, ac
                 ...state,
                 totalCount: action.count,
             }
+        case "SET_CURRENT_FRIEND_PAGE":
+            return {
+                ...state,
+                currentPage: action.value
+            }
 
         case 'DELETE_FRIEND':
             return {
@@ -35,7 +42,7 @@ export const friendsReducer = (state: InitialStateType = friendsInitialState, ac
     }
 }
 
-export type FriendsReducerActonType = SetFriendsType | DeleteFriendType | SetTotalCountType
+export type FriendsReducerActonType = SetFriendsType | DeleteFriendType | SetTotalCountType | SetCurrentFriendPageType
 type SetFriendsType = ReturnType<typeof setFriends>
 export const setFriends = (friends: UsersType[]) => {
     return {
@@ -57,6 +64,14 @@ export const setTotalCount = (count: number) => {
         type: 'SET_TOTAL_COUNT',
         count
     } as const
+}
+
+type SetCurrentFriendPageType = ReturnType<typeof setCurrentFriendPage>
+export const setCurrentFriendPage = (value: number) => {
+    return {
+        type: 'SET_CURRENT_FRIEND_PAGE',
+        value
+    }as const
 }
 
 export const setFriendsTC = (currentPage: number, pageSize: number, friend: boolean): AppThunk => dispatch => {

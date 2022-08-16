@@ -6,7 +6,7 @@ import {AppThunk} from "./store";
 
 const FOLLOW = 'FOLLOW'
 const SET_USERS = 'SET_USERS'
-const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
+export  const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
 const SET_DISABLED = 'SET_DISABLED'
 const SET_PAGE_SIZE = 'SET_PAGE_SIZE'
@@ -109,7 +109,7 @@ export const setUsers = (users: Array<UsersType>) => {
     } as const
 }
 
-type SetCurrentPageType = ReturnType<typeof setCurrentPage>
+export type SetCurrentPageType = ReturnType<typeof setCurrentPage>
 export const setCurrentPage = (currentPage: number) => {
     return {
         type: SET_CURRENT_PAGE,

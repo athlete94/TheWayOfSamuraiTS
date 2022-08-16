@@ -9,7 +9,7 @@ export type BasicPaginationType = {
 }
 
 export default function BasicPagination({handleChange, pagesCount}: BasicPaginationType) {
-    const page = useAppSelector(state => state.UsersReducer.currentPage)
+    const page = useAppSelector(state => state.friendsReducer.currentPage)
 
     return (
         <Stack spacing={2}>

@@ -2,7 +2,7 @@ import React, {useCallback, useEffect} from "react";
 import s from './Friends.module.css'
 import {Navigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
-import {deleteFriendTC, setFriendsTC} from "../../redux/friendsReducer";
+import {deleteFriendTC, setCurrentFriendPage, setFriendsTC} from "../../redux/friendsReducer";
 import {Preloader} from "../Preloader/circle/Preloader";
 import {Friend} from "./Friend/Friend";
 import {deleteUserTC, followUserTC, setCurrentPage} from "../../redux/UsersReducer";
@@ -17,8 +17,8 @@ const Friends = () => {
     const {
         pageSize,
         currentPage,
-    } = useAppSelector(state => state.UsersReducer)
-    const totalCount = useAppSelector(state => state.friendsReducer.totalCount)
+        totalCount
+    } = useAppSelector(state => state.friendsReducer)
 
     let dispatch = useAppDispatch()
 
@@ -34,7 +34,7 @@ const Friends = () => {
             dispatch(deleteFriendTC(id))
     }, [])
     const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-        dispatch(setCurrentPage(value))
+        dispatch(setCurrentFriendPage(value))
     };
 
     let pagesCount = Math.ceil(totalCount / pageSize)
