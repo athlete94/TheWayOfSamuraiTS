@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkmy_social_network=self.webpackChunkmy_social_network||[]).push([[227],{1227:function(e,n,t){t.r(n);t(2791);var r=t(184);n.default=function(){return(0,r.jsxs)("div",{style:{textAlign:"center",marginTop:"100px"},children:[(0,r.jsx)("h1",{children:"404"}),(0,r.jsx)("h1",{children:"Not Found"})]})}}}]);
+//# sourceMappingURL=227.e3adb048.chunk.js.map
