@@ -46,13 +46,18 @@ const UserInfo = React.memo(({userProfile, status, id}: UserInfoType) => {
             <div className={s.description_content}>
                 <div className={s.fullName}>{fullName}</div>
                 <div className={s.status}>
-                    <EditableSpan title={status ? status : 'change status..'} callback={updateStatus}/>
+                    {id === userProfile.userId ?
+                        <EditableSpan title={status ? status : 'change status..'} callback={updateStatus}/>
+                        :
+                        <span>{status}</span>
+                    }
+
                     {statusLoad === 'statusUpdating' && <Dots/>}
                 </div>
                 <div>{aboutMe}</div>
                 <div>{lookingForAJobDescription && `Job: ${lookingForAJobDescription}`}</div>
                 <div>
-                    <UserContacts />
+                    <UserContacts/>
                 </div>
             </div>
 

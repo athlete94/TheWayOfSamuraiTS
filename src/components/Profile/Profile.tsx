@@ -13,7 +13,7 @@ export const Profile = () => {
     let statusLoad = useAppSelector(state => state.AppReducer.status)
     let isLogin = useAppSelector(state => state.AuthReducer.isLogin)
     let {userProfile, status} = useAppSelector(state => state.profileReducer)
-    let id = useAppSelector(state => state.AuthReducer.userId)
+    let id = useAppSelector(state => state.AuthReducer.userId)// id login user
     let dispatch = useAppDispatch()
 
     let {userId} = useParams()
