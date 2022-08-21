@@ -17,7 +17,7 @@ const Friends = () => {
     const {
         pageSize,
         currentPage,
-        totalCount
+        totalCount,
     } = useAppSelector(state => state.friendsReducer)
 
     let dispatch = useAppDispatch()
@@ -46,7 +46,7 @@ const Friends = () => {
         {statusLoad === 'loading' && <Preloader/> /*loading*/}
 
         <div className={style.pagination}>
-            <BasicPagination handleChange={handleChange} pagesCount={pagesCount}/>
+            <BasicPagination page={currentPage} handleChange={handleChange} pagesCount={pagesCount}/>
         </div>
         {friends.map(f => {
             return (

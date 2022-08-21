@@ -1,4 +1,4 @@
-import {followUnfollow, SET_CURRENT_PAGE, SetCurrentPageType, setDisabled, setUsers, UsersType} from "./UsersReducer";
+import {setDisabled, UsersType} from "./UsersReducer";
 import {setError, setStatus} from "./appReducer";
 import {usersApi} from "../api/UsersApi";
 import {AxiosError} from "axios";

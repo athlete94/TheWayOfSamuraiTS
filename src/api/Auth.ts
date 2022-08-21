@@ -13,13 +13,21 @@ export const authApi = {
     getAuth() {
         return instance.get<ResponseType<{id: number, email: string, login: string}>>('auth/me')
     },
-    login(loginData: LoginRequestParams) {
+    login(loginData: LoginRequestParams ) {
+        debugger
         return instance.post<ResponseType<{userId: number}>>('auth/login', loginData)
     },
     logout() {
         return instance.delete<ResponseType>('auth/login')
     }
 }
+
+export const captchaApi = {
+    getCaptchaUrl() {
+        return instance.get<{'url': string}>('security/get-captcha-url')
+    }
+}
+
 
 export type ResponseType<T = {}> = {
     data: T,

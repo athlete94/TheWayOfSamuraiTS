@@ -49,7 +49,7 @@ const Users = () => {
 
             <div className={s.pagination}>
                 <SelectAutoWidth/>
-                <BasicPagination handleChange={handleChange} pagesCount={pagesCount}/>
+                <BasicPagination page={currentPage} handleChange={handleChange} pagesCount={pagesCount}/>
             </div>
             <div className={s.users}>
                 {users.map(u => (

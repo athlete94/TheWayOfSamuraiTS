@@ -1,5 +1,5 @@
 import {Dispatch} from "redux";
-import {authApi, LoginRequestParams} from "../api/Auth";
+import {authApi, captchaApi, LoginRequestParams} from "../api/Auth";
 import {AppReducerActionType, setError, setStatus} from "./appReducer";
 import {AxiosError} from "axios";
 import {AppThunk} from "./store";
@@ -10,10 +10,11 @@ const initialState = {
     email: '',
     login: '',
     isAuth: false,
-    isLogin: false
+    isLogin: false,
+    captcha: '',
 }
 
-export type ActionAuthType = SetIsAuthType | AppReducerActionType | SetIsLoginType
+export type ActionAuthType = SetIsAuthType | AppReducerActionType | SetIsLoginType | SetCaptchaUrlType
 
 export const AuthReducer = (state: AuthInitialStateType = initialState, action: ActionAuthType): AuthInitialStateType => {
     switch (action.type) {
@@ -27,6 +28,11 @@ export const AuthReducer = (state: AuthInitialStateType = initialState, action: 
             return {
                 ...state,
                 isLogin: action.isLogin
+            }
+        case 'SET_CAPTCHA_URL':
+            return  {
+                ...state,
+                captcha: action.captcha
             }
         default:
             return state
@@ -51,6 +57,14 @@ export const setIsLogin = (isLogin: boolean) => {
     } as const
 }
 
+type SetCaptchaUrlType = ReturnType<typeof setCaptchaUrl>
+export const setCaptchaUrl = (captcha: string) => {
+    return {
+        type: "SET_CAPTCHA_URL",
+        captcha,
+    } as const
+}
+
 
 //thunk
 
@@ -71,11 +85,14 @@ export const setIsAuthTC = (): AppThunk => async dispatch => {
 }
 
 
-export const loginTC = (data: LoginRequestParams): AppThunk => dispatch => {
+export const loginTC = (data: LoginRequestParams): AppThunk => dispatch =>  {
     authApi.login(data)
         .then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(setIsLogin(true))
+                dispatch(setCaptchaUrl(''))
+            } else if(res.data.resultCode === 10) {
+                dispatch(getCaptchaTC())
             } else {
                 dispatch(setError(res.data.messages[0]))
             }
@@ -95,6 +112,16 @@ export const logoutTC = (): AppThunk => (dispatch) => {
                 dispatch(setIsAuth({userId: 0, email: '', login: ''}, true))
             }
         })
+        .catch((err: AxiosError) => {
+            dispatch(setError(err.message))
+        })
+}
+
+export const getCaptchaTC = (): AppThunk =>  dispatch =>  {
+    captchaApi.getCaptchaUrl()
+        .then(res => {
+                dispatch(setCaptchaUrl(res.data.url))
+    })
         .catch((err: AxiosError) => {
             dispatch(setError(err.message))
         })

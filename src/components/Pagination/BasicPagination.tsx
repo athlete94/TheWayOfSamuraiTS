@@ -6,10 +6,10 @@ import {useAppSelector} from "../../redux/hooks";
 export type BasicPaginationType = {
     handleChange: (event: React.ChangeEvent<unknown>, value: number) => void
     pagesCount: number
+    page: number
 }
 
-export default function BasicPagination({handleChange, pagesCount}: BasicPaginationType) {
-    const page = useAppSelector(state => state.friendsReducer.currentPage)
+export default function BasicPagination({handleChange, pagesCount, page}: BasicPaginationType) {
 
     return (
         <Stack spacing={2}>

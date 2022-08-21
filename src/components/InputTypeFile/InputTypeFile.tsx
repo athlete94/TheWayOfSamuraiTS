@@ -47,11 +47,12 @@ export const InputTypeFile = React.memo(({userAva, setUserAva, userId}: InputTyp
                  onError={errorHandler}
                  alt=""/>
 
+            {userId === id && //
             <input type="file"
                    onChange={uploadHandler}
                    style={{display: 'none'}}
 
-            />
+            />}
 
             {userId === id && // показывай кнопку только если свой профайл
             <div style={{display: 'flex', justifyContent:'center', alignItems: 'center'}}>

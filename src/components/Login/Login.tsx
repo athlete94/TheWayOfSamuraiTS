@@ -1,6 +1,6 @@
 import React from 'react';
 import {useFormik} from "formik";
-import {loginTC, setIsAuthTC} from "../../redux/authReducer";
+import {AuthReducer, loginTC, setIsAuthTC} from "../../redux/authReducer";
 import s from './Login..module.css'
 import {Navigate} from "react-router-dom";
 import {setError} from "../../redux/appReducer";
@@ -15,6 +15,7 @@ type FormikErrorType = {
 const Login = () => {
 
     let isLogin = useAppSelector(state => state.AuthReducer.isLogin)
+    let captcha = useAppSelector(state => state.AuthReducer.captcha)
     const dispatch = useAppDispatch()
 
     let formik = useFormik({
@@ -22,6 +23,7 @@ const Login = () => {
             email: '',
             password: '',
             rememberMe: false,
+            captcha: ''
         },
         onSubmit: values => {
             dispatch(loginTC(values))
@@ -62,14 +64,16 @@ const Login = () => {
                         {...formik.getFieldProps('email')}
                     />
                 </div>
-                {formik.touched.email && formik.errors.email ? <div style={{color: 'red', textAlign: 'left'}}>{formik.errors.email}</div> : null}
+                {formik.touched.email && formik.errors.email ?
+                    <div style={{color: 'red', textAlign: 'left'}}>{formik.errors.email}</div> : null}
                 <div className={s.login_input}>
                     <input type="password"
                            placeholder='password'
                            {...formik.getFieldProps('password')}
                     />
                 </div>
-                {formik.touched.password && formik.errors.password ? <div style={{color: 'red', textAlign: 'left'}}>{formik.errors.password}</div> : null}
+                {formik.touched.password && formik.errors.password ?
+                    <div style={{color: 'red', textAlign: 'left'}}>{formik.errors.password}</div> : null}
                 <div className={s.checkbox}><label>
                     <input type="checkbox"
                            {...formik.getFieldProps('rememberMe')}
@@ -77,6 +81,15 @@ const Login = () => {
                     />
                     <span>remember me</span>
                 </label></div>
+
+                {captcha && <div className={s.captcha}>
+                    <img src={captcha} alt="captcha"/>
+                    <input type="captcha"
+                           placeholder='captcha'
+                           {...formik.getFieldProps('captcha')}
+                    />
+                </div>
+                }
                 <div className={s.loginBtn}>
                     <button type={'submit'}>LOGIN</button>
                 </div>

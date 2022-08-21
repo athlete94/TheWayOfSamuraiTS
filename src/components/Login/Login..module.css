@@ -42,3 +42,16 @@
 }
 
 
+.captcha {
+    display: flex;
+    flex-direction: column;
+}
+
+.captcha input {
+    border: none;
+    background-color: #fff;
+    width: 250px;
+    outline:none;
+    padding: 5px;
+    border-bottom: 1px solid forestgreen;
+}
